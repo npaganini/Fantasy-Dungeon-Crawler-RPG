@@ -2,25 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionMapper : MonoBehaviour
+public class ActionMapper 
 {
-    public static bool GetMoveLeft()
+    public static float GetMoveHorizontal(int playerNum = 0)
     {
-        return Input.GetKey(KeyCode.A);
+        float keyb = (Input.GetKey(KeyCode.A) ? -1f : 0f) + (Input.GetKey(KeyCode.D) ? 1f : 0f);
+        return Input.GetAxis("Horizontal") + keyb;
     }
 
-    public static bool GetMoveRight()
+    public static float GetMoveVertical(int playerNum = 0)
     {
-        return Input.GetKey(KeyCode.D);
-    }
-
-    public static bool GetMoveUp()
-    {
-        return Input.GetKey(KeyCode.W);
-    }
-
-    public static bool GetMoveDown()
-    {
-        return Input.GetKey(KeyCode.S);
+        float keyb = (Input.GetKey(KeyCode.W) ? 1f : 0f) + (Input.GetKey(KeyCode.S) ? -1f : 0f);
+        return Input.GetAxis("Vertical") + keyb;
     }
 }
