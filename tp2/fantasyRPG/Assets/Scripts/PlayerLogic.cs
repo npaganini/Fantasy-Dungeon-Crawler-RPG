@@ -7,8 +7,16 @@ public class PlayerLogic : MonoBehaviour
     public CharacterController cc;
     public Animator anmCtrl;
     public float speed = 2f;
-    private float moveLeftRightValue;
-    private float moveUpDownValue;
+    
+    // camera and rotation
+    public Transform cameraHolder;
+    public float mouseSensitivity = 2f;
+    public float upLimit = -50;
+    public float downLimit = 50;
+    
+    
+    private float gravity = 30.87f;
+    private float verticalSpeed = 0;
 
     void Start()
     {
@@ -17,43 +25,49 @@ public class PlayerLogic : MonoBehaviour
         anmCtrl = GetComponent<Animator>();
     }
 
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+    
     // Update is called once per frame
     void Update()
     {
-        ReadInput();
         UpdatePosition();
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit, 100))
-        {
-            transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
-        }
+        Rotate();
     }
-
-    void ReadInput()
+    
+    public void Rotate()
     {
-        moveLeftRightValue = ActionMapper.GetMoveHorizontal();
-        moveUpDownValue = ActionMapper.GetMoveVertical();
+        float horizontalRotation = Input.GetAxis("Mouse X");
+        float verticalRotation = Input.GetAxis("Mouse Y");
+        
+        transform.Rotate(0, horizontalRotation * mouseSensitivity, 0);
+        cameraHolder.Rotate(-verticalRotation*mouseSensitivity,0,0);
 
+        Vector3 currentRotation = cameraHolder.localEulerAngles;
+        if (currentRotation.x > 180) currentRotation.x -= 360;
+        currentRotation.x = Mathf.Clamp(currentRotation.x, upLimit, downLimit);
+        cameraHolder.localRotation = Quaternion.Euler(currentRotation);
     }
 
     void UpdatePosition()
     {
-        float dt = Time.deltaTime;
-        Vector2 movDir = new Vector2(moveLeftRightValue, moveUpDownValue);
-        movDir = movDir.normalized;
-        float spd = speed * movDir.magnitude;
-        anmCtrl.SetFloat("Speed_f", spd);
-        float dx = dt * spd * moveLeftRightValue;
-        float dz = dt * spd * moveUpDownValue;
-        cc.Move(new Vector3(dx, 0f, dz));
+        float horizontalMove = Input.GetAxis("Horizontal");
+        float verticalMove = Input.GetAxis("Vertical");
 
-        /*
-        if (Mathf.Abs(moveLeftRightValue) > 0.01f || Mathf.Abs(moveUpDownValue) > 0.01f)
-        {
-            if(movDir.magnitude > 0.001f)
-                transform.forward = new Vector3(dx, 0f, dz);
-        }*/
+        if (cc.isGrounded) verticalSpeed = 0;
+        else verticalSpeed -= gravity * Time.deltaTime;
+        Vector3 gravityMove = new Vector3(0, verticalSpeed, 0);
+        
+        Vector3 move = transform.forward * verticalMove + transform.right * horizontalMove;
+        cc.Move(speed * Time.deltaTime * move + gravityMove * Time.deltaTime);
+        
+        //Debug.Log("HORIZONTAL" + horizontalMove);
+        //Debug.Log("VERTICAL " + verticalMove);
+
+        float spd = speed * verticalMove;
+        anmCtrl.SetFloat("Speed_f", spd);
     }
 }
