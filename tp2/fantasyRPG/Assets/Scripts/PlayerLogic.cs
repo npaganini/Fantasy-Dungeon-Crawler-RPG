@@ -24,11 +24,6 @@ public class PlayerLogic : MonoBehaviour
 
         anmCtrl = GetComponent<Animator>();
     }
-
-    private void Awake()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
     
     // Update is called once per frame
     void Update()
