@@ -15,4 +15,6 @@ public class ActionMapper
         float keyb = (Input.GetKey(KeyCode.W) ? 1f : 0f) + (Input.GetKey(KeyCode.S) ? -1f : 0f);
         return Input.GetAxis("Vertical") + keyb;
     }
+
+
 }

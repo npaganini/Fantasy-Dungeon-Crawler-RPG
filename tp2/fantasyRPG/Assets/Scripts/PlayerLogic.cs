@@ -7,7 +7,7 @@ public class PlayerLogic : MonoBehaviour
     public CharacterController cc;
     public Animator anmCtrl;
     public float speed = 2f;
-    
+    public float interactDistance = 4f;
     // camera and rotation
     public Transform cameraHolder;
     public float mouseSensitivity = 2f;
@@ -34,11 +34,24 @@ public class PlayerLogic : MonoBehaviour
         {
             Debug.Log("Mouse is down");
 
-            RaycastHit hitInfo = new RaycastHit();
-            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-            if (hit)
+            
+        }
+        //interact key
+        if (Input.GetKey(KeyCode.E)) 
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
             {
-                Debug.Log("Hit " + hitInfo.transform.gameObject.name);
+                if (hit.transform.CompareTag("Door")){
+                    if (Vector3.Distance(transform.position, hit.transform.position) <= interactDistance)
+                    {
+                        hit.transform.GetComponent<Door>().OpenClose();
+                        anmCtrl.Play("Open_door");
+                    }
+                        
+                }
             }
         }
     }
@@ -55,6 +68,8 @@ public class PlayerLogic : MonoBehaviour
         if (currentRotation.x > 180) currentRotation.x -= 360;
         currentRotation.x = Mathf.Clamp(currentRotation.x, upLimit, downLimit);
         cameraHolder.localRotation = Quaternion.Euler(currentRotation);
+
+
     }
 
     void UpdatePosition()
