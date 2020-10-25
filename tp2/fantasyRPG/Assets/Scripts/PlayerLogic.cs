@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerLogic : MonoBehaviour
@@ -13,16 +15,22 @@ public class PlayerLogic : MonoBehaviour
     public float mouseSensitivity = 2f;
     public float upLimit = -50;
     public float downLimit = 50;
-    
-    
+    public Weapon[] weapons;
+    public Weapon equipped;
+    private int eqIndex = 0;
     private float gravity = 30.87f;
     private float verticalSpeed = 0;
+
+    private float switchCooldown = 1f;
+    private float switchTimer = 0f;
+    private bool switchOnCd = false;
 
     void Start()
     {
         cc = GetComponent<CharacterController>();
 
         anmCtrl = GetComponent<Animator>();
+        equipped = weapons[0];
     }
     
     // Update is called once per frame
@@ -35,6 +43,15 @@ public class PlayerLogic : MonoBehaviour
             Debug.Log("Mouse is down");
 
             
+        }
+
+        if (switchOnCd)
+        {
+            switchTimer += Time.deltaTime;
+            if(switchTimer >= switchCooldown)
+            {
+                switchOnCd = false;
+            }
         }
         //interact key
         if (Input.GetKey(KeyCode.E)) 
@@ -53,6 +70,17 @@ public class PlayerLogic : MonoBehaviour
                         
                 }
             }
+        }
+        if (Input.GetKey(KeyCode.Tab) && !switchOnCd)
+        {
+            equipped.gameObject.SetActive(false);
+            eqIndex++;
+            if (eqIndex == weapons.Length)
+                eqIndex = 0;
+            equipped = weapons[eqIndex];
+            equipped.gameObject.SetActive(true);
+            switchTimer = 0f;
+            switchOnCd = true;
         }
     }
     
