@@ -5,5 +5,6 @@ using UnityEngine;
 abstract public class Weapon : MonoBehaviour
 {
     // Start is called before the first frame update
-    public void Attack() { }
+    
+    virtual public void Attack(Animator anmCtrl) { }
 }

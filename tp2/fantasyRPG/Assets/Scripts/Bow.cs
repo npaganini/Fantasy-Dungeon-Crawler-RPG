@@ -15,4 +15,11 @@ public class Bow : Weapon
     {
         
     }
+
+    public override void Attack(Animator animCtrl)
+    {
+        //animCtrl.Play("BowShoot");
+        animCtrl.SetInteger("WeaponType_int", 11);
+        animCtrl.SetBool("Shoot_b", true);
+    }
 }

@@ -71,6 +71,11 @@ public class PlayerLogic : MonoBehaviour
                 }
             }
         }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            equipped.Attack(anmCtrl);
+            anmCtrl.SetFloat("Speed_f", 0f);
+        }
         if (Input.GetKey(KeyCode.Tab) && !switchOnCd)
         {
             equipped.gameObject.SetActive(false);

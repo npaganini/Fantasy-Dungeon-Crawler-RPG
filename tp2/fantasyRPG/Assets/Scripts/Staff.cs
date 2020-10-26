@@ -5,6 +5,7 @@ using UnityEngine;
 public class Staff : Weapon
 {
     // Start is called before the first frame update
+
     void Start()
     {
         
@@ -14,5 +15,12 @@ public class Staff : Weapon
     void Update()
     {
         
+    }
+
+
+    public override void Attack(Animator animCtrl)
+    {
+        animCtrl.SetInteger("WeaponType_int", 12);
+        animCtrl.SetInteger("MeleeType_int", 2);
     }
 }

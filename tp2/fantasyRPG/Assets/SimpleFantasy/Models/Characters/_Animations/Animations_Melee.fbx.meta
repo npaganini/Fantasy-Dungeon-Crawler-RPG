@@ -627,7 +627,7 @@ ModelImporter:
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 799.8
     - serializedVersion: 16
       name: Open_Door
       takeName: Take 001
