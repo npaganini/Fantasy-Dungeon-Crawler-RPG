@@ -17,6 +17,7 @@ public class EnemyManager : MonoBehaviour
     public float speed = 2f;
     public GameObject player;
     public float Damping= 6.0f;
+    public float fov= 160.0f;
 
     public Animator anmCtrl;
 
@@ -37,7 +38,16 @@ public class EnemyManager : MonoBehaviour
         }
         else
         {
-            Chase();
+            if (LineOfSight())
+            {
+                Chase();
+            }
+            else
+            {
+                anmCtrl.SetFloat("Speed_f", 0);
+                
+            }
+
             if (onCoolDown)
             {
                 cooldown += Time.deltaTime;
@@ -45,25 +55,6 @@ public class EnemyManager : MonoBehaviour
             }
         }
     }
-    
-    void UpdatePosition()
-    {
-        float horizontalMove = ((float)Random.Range(0, 99))/100f;
-        float verticalMove = ((float)Random.Range(0, 99))/100f;
-
-        if (cc.isGrounded) verticalSpeed = 0;
-        else verticalSpeed -= gravity * Time.deltaTime;
-        Vector3 gravityMove = new Vector3(0, verticalSpeed, 0);
-        
-        Vector3 move = transform.forward * verticalMove + transform.right * horizontalMove;
-        Debug.Log(move);
-        cc.Move(speed * Time.deltaTime * move + gravityMove * Time.deltaTime);
-        
-
-        float spd = speed * verticalMove;
-        anmCtrl.SetFloat("Speed_f", spd);
-    }
-    
     private void Chase ()
     {
         LookAt();
@@ -78,11 +69,17 @@ public class EnemyManager : MonoBehaviour
     }
     
     private void LookAt(){
-        // Rotate to look at player.
         Quaternion rotation= Quaternion.LookRotation(player.transform.position - transform.position);
-        // Dampening will slow the turn speed of enemy.
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * Damping);
-        //    transform.LookAt(Target);
+    }
+    
+    public bool LineOfSight ()
+    {
+        var distance = Vector3.Distance(player.transform.position, transform.position);
+        if (distance <= fov) {
+            return true;
+        }
+        return false;
     }
 
     public void Attack(int damage)

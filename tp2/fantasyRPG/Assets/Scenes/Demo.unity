@@ -44534,6 +44534,7 @@ MonoBehaviour:
   speed: 0.4
   player: {fileID: 520628174}
   Damping: 6
+  fov: 20
   anmCtrl: {fileID: 0}
 --- !u!65 &972280155
 BoxCollider:
