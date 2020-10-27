@@ -71,7 +71,7 @@ public class PlayerLogic : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             equipped.Attack(anmCtrl);
             anmCtrl.SetFloat("Speed_f", 0f);
