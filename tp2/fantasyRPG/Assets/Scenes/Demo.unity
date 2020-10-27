@@ -44536,6 +44536,8 @@ MonoBehaviour:
   Damping: 6
   fov: 20
   anmCtrl: {fileID: 0}
+  PlayerLogic: {fileID: 0}
+  enemyDamage: 10
 --- !u!65 &972280155
 BoxCollider:
   m_ObjectHideFlags: 0

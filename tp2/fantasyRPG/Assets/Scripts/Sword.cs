@@ -44,7 +44,7 @@ public class Sword : Weapon
 
         if (string.Compare(col.gameObject.tag, "Enemy", StringComparison.Ordinal) == 0 && attacking)
         {
-            col.gameObject.GetComponent<EnemyManager>().Attack(20);
+            col.gameObject.GetComponent<EnemyManager>().Attacked(20);
         }
     }
     

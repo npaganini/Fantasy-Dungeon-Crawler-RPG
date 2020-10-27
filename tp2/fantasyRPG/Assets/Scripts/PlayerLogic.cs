@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerLogic : MonoBehaviour
 {
@@ -24,7 +25,9 @@ public class PlayerLogic : MonoBehaviour
     private float switchCooldown = 1f;
     private float switchTimer = 0f;
     private bool switchOnCd = false;
-
+    private float life = 100;
+    private float resetCoolDown;
+    
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -36,6 +39,15 @@ public class PlayerLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (life <= 0)
+        {
+            resetCoolDown += Time.deltaTime;
+            if (resetCoolDown > 3)
+            {
+                SceneManager.LoadScene("Demo");
+            }
+            return;
+        }
         UpdatePosition();
         Rotate();
         if (Input.GetMouseButtonDown(0))
@@ -122,5 +134,16 @@ public class PlayerLogic : MonoBehaviour
 
         float spd = speed * verticalMove;
         anmCtrl.SetFloat("Speed_f", spd);
+    }
+
+    public void Attacked( float damage)
+    {
+        life -= damage;
+        Debug.Log("PLAYER LIFE:" + life);
+        if (life <= 0)
+        {
+            anmCtrl.SetBool("Dead", true);
+            
+        }
     }
 }

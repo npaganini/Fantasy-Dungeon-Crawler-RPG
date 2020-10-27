@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class EnemyManager : MonoBehaviour
 {
     
-    private int life = 100;
+    private float life = 100;
 
     private bool onCoolDown = false;
     private float cooldown = 0;
@@ -18,26 +18,35 @@ public class EnemyManager : MonoBehaviour
     public GameObject player;
     public float Damping= 6.0f;
     public float fov= 160.0f;
-
     public Animator anmCtrl;
+    public PlayerLogic PlayerLogic;
+    public float enemyDamage;
+
+    private bool attacking;
+    private float attackingCoolDown;
 
     // Start is called before the first frame update
     void Start()
     {
         anmCtrl = GetComponent<Animator>();
         cc = GetComponent<CharacterController>();
+        PlayerLogic = player.GetComponent<PlayerLogic>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (life <= 0)
         {
             anmCtrl.SetBool("Dead", true);
         }
         else
         {
+            if (attacking)
+            {
+                attackingCoolDown += Time.deltaTime;
+                attacking = !(attackingCoolDown > 2);
+            }
             if (LineOfSight())
             {
                 Chase();
@@ -77,12 +86,29 @@ public class EnemyManager : MonoBehaviour
     {
         var distance = Vector3.Distance(player.transform.position, transform.position);
         if (distance <= fov) {
+            if (distance < 2.5)
+            {
+                Attack();
+                return false;
+            }
             return true;
         }
         return false;
     }
 
-    public void Attack(int damage)
+    private void Attack()
+    {
+        if (!attacking)
+        {
+            anmCtrl.SetInteger("WeaponType_int", 12);
+            anmCtrl.SetInteger("MeleeType_int", 1);
+            PlayerLogic.Attacked(enemyDamage);
+            attacking = true;
+            attackingCoolDown = 0;
+        }
+    }
+
+    public void Attacked(float damage)
     {
         if (!onCoolDown)
         {
