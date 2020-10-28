@@ -33,7 +33,7 @@ public class PlayerLogic : MonoBehaviour
         cc = GetComponent<CharacterController>();
 
         anmCtrl = GetComponent<Animator>();
-        equipped = weapons[0];
+        equipped = weapons[2];
     }
     
     // Update is called once per frame
