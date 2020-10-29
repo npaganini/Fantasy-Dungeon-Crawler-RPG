@@ -20,6 +20,7 @@ public class ExitBow : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("Shoot_b", false);
+        animator.SetBool("Shoot_cross", false);
         animator.SetInteger("WeaponType_int", 0);
 
     }
