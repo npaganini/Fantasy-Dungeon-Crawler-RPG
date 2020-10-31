@@ -53,8 +53,6 @@ public class PlayerLogic : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Mouse is down");
-
-            
         }
 
         if (switchOnCd)
@@ -99,22 +97,28 @@ public class PlayerLogic : MonoBehaviour
             switchTimer = 0f;
             switchOnCd = true;
         }
+
+        // if(Input.GetKeyDown(KeyCode.Escape))
+        // {
+        //     PauseMenu.Pause();
+        // }
     }
     
     public void Rotate()
     {
-        float horizontalRotation = Input.GetAxis("Mouse X");
-        float verticalRotation = Input.GetAxis("Mouse Y");
-        
-        transform.Rotate(0, horizontalRotation * mouseSensitivity, 0);
-        cameraHolder.Rotate(-verticalRotation*mouseSensitivity,0,0);
+        if (Time.deltaTime != 0)
+        {
+            float horizontalRotation = Input.GetAxis("Mouse X");
+            float verticalRotation = Input.GetAxis("Mouse Y");
 
-        Vector3 currentRotation = cameraHolder.localEulerAngles;
-        if (currentRotation.x > 180) currentRotation.x -= 360;
-        currentRotation.x = Mathf.Clamp(currentRotation.x, upLimit, downLimit);
-        cameraHolder.localRotation = Quaternion.Euler(currentRotation);
+            transform.Rotate(0, horizontalRotation * mouseSensitivity, 0);
+            cameraHolder.Rotate(-verticalRotation * mouseSensitivity, 0, 0);
 
-
+            Vector3 currentRotation = cameraHolder.localEulerAngles;
+            if (currentRotation.x > 180) currentRotation.x -= 360;
+            currentRotation.x = Mathf.Clamp(currentRotation.x, upLimit, downLimit);
+            cameraHolder.localRotation = Quaternion.Euler(currentRotation);
+        }
     }
 
     void UpdatePosition()
