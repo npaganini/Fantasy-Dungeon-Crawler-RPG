@@ -8,8 +8,9 @@ public class Door : MonoBehaviour
     public float cooldown = 1f;
     public float timer;
     public bool onCooldown = false;
-    private bool alreadyOpen = false;
     public bool isJailDoor;
+    public int keysToOpen;
+    
     // Start is called before the first frame update
     void Update()
     {
@@ -25,12 +26,12 @@ public class Door : MonoBehaviour
     }
 
     // Update is called once per frame
-    public int OpenClose(int keys)
+    public void OpenClose(int keys)
     {
         if (!onCooldown) {
             if (!isOpen)
             {
-                keys = Open(keys);
+                Open(keys);
             }
             else
             {
@@ -41,22 +42,14 @@ public class Door : MonoBehaviour
             timer = 0f;
         }
 
-        return keys;
     }
 
-    public int Open(int keys)
+    public void Open(int keys)
     {
         if (isJailDoor)
         {
-            Debug.Log(keys);
-            if (keys > 0 || alreadyOpen)
-            {
+            if(keys >= keysToOpen){
                 gameObject.transform.GetChild(0).transform.Rotate(0f, -90f, 0f);
-                if (!alreadyOpen)
-                {
-                    alreadyOpen = true;
-                    keys--;
-                }
                 isOpen = !isOpen;
             }
         }
@@ -66,7 +59,6 @@ public class Door : MonoBehaviour
             isOpen = !isOpen;
         }
 
-        return keys;
     }
 
     public void Close()

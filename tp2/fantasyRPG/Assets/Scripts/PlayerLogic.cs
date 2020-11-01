@@ -66,28 +66,32 @@ public class PlayerLogic : MonoBehaviour
         //interact key
         if (Input.GetKey(KeyCode.E)) 
         {
-            RaycastHit hit;
+            RaycastHit[] allHits;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.transform.CompareTag("Door")){
-                    if (Vector3.Distance(transform.position, hit.transform.position) <= interactDistance)
-                    {
-                        keys = hit.transform.GetComponent<Door>().OpenClose(keys);
-                        anmCtrl.Play("Open_door");
-                    }
-                    else
-                    {
-                        Debug.Log(Vector3.Distance(transform.position, hit.transform.position));
-                    }
-                        
-                }
-                if (hit.transform.CompareTag("Key"))
+            allHits = Physics.RaycastAll(ray, 100).OrderBy(h=>h.distance).ToArray();
+            foreach(RaycastHit hit in allHits){
+                Debug.Log(hit.transform.name);
+                if (!hit.transform.CompareTag("Player"))
                 {
-                    keys++;
-                    hit.transform.gameObject.active = false;
-                    Debug.Log(keys);
+                    if (hit.transform.CompareTag("Door"))
+                    {
+                        if (Vector3.Distance(transform.position, hit.transform.position) <= interactDistance)
+                        {
+                            hit.transform.GetComponent<Door>().OpenClose(keys);
+                            anmCtrl.Play("Open_door");
+                        }
+                        else
+                        {
+                            Debug.Log(Vector3.Distance(transform.position, hit.transform.position));
+                        }
+
+                    } else if (hit.transform.CompareTag("Key"))
+                    {
+                        keys++;
+                        hit.transform.gameObject.active = false;
+                        Debug.Log(keys);
+                    }
+                    break;
                 }
             }
         }
