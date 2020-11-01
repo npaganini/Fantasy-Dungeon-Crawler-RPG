@@ -9,6 +9,7 @@ TagManager:
   - Staff
   - Bow
   - Enemy
+  - Key
   layers:
   - Default
   - TransparentFX

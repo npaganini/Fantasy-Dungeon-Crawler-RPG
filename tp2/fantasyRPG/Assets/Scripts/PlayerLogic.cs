@@ -27,7 +27,7 @@ public class PlayerLogic : MonoBehaviour
     private bool switchOnCd = false;
     private float life = 100;
     private float resetCoolDown;
-    
+    private int keys = 0;
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -74,12 +74,27 @@ public class PlayerLogic : MonoBehaviour
                 if (hit.transform.CompareTag("Door")){
                     if (Vector3.Distance(transform.position, hit.transform.position) <= interactDistance)
                     {
-                        hit.transform.GetComponent<Door>().OpenClose();
+                        keys = hit.transform.GetComponent<Door>().OpenClose(keys);
                         anmCtrl.Play("Open_door");
+                    }
+                    else
+                    {
+                        Debug.Log(Vector3.Distance(transform.position, hit.transform.position));
                     }
                         
                 }
+                if (hit.transform.CompareTag("Key"))
+                {
+                    keys++;
+                    hit.transform.gameObject.active = false;
+                    Debug.Log(keys);
+                }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Debug.Log(keys);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
