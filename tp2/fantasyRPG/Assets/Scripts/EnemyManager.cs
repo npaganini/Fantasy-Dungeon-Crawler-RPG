@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,7 +11,7 @@ public class EnemyManager : MonoBehaviour
     private float cooldown = 0;
     private CharacterController cc;
     private float gravity = 30.87f;
-    private float verticalSpeed = 0;
+    private TypeOfDamage enemyType = TypeOfDamage.Melee; // todo: change to different enemy types
     public float speed = 2f;
     public GameObject player;
     public float Damping= 6.0f;
@@ -108,14 +106,52 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public void Attacked(float damage)
+    public void Attacked(float damage, TypeOfDamage damageType)
     {
         if (!onCoolDown)
         {
-            life -= damage;
+            life -= getDamageAfterTypeComparison(damage, damageType);
             Debug.Log(life);
             onCoolDown = true;
             cooldown = 0;
         }
+    }
+
+    private float getDamageAfterTypeComparison(float damage, TypeOfDamage damageType)
+    {
+        switch (damageType)
+        {
+            case TypeOfDamage.Melee:
+                if (enemyType != damageType)
+                {
+                    if (enemyType == TypeOfDamage.Ranged)
+                    {
+                        return damage * 2;
+                    }
+                    return damage / 2;
+                }
+                return damage;
+            case TypeOfDamage.Ranged:
+                if (enemyType != damageType)
+                {
+                    if (enemyType == TypeOfDamage.Magic)
+                    {
+                        return damage * 2;
+                    }
+                    return damage / 2;
+                }
+                return damage;
+            case TypeOfDamage.Magic:
+                if (enemyType != damageType)
+                {
+                    if (enemyType == TypeOfDamage.Melee)
+                    {
+                        return damage * 2;
+                    }
+                    return damage / 2;
+                }
+                return damage;
+        }
+        return damage;
     }
 }

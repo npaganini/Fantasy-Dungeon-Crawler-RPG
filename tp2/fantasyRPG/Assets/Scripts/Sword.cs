@@ -8,6 +8,8 @@ public class Sword : Weapon
 {
     public CharacterController cc;
     private bool attacking = false;
+    private int damagePerAttack = 50;
+    private TypeOfDamage damageType = TypeOfDamage.Melee;
 
     private float attackingCoolDown;
     // Start is called before the first frame update
@@ -44,7 +46,7 @@ public class Sword : Weapon
 
         if (string.Compare(col.gameObject.tag, "Enemy", StringComparison.Ordinal) == 0 && attacking)
         {
-            col.gameObject.GetComponent<EnemyManager>().Attacked(100);
+            col.gameObject.GetComponent<EnemyManager>().Attacked(damagePerAttack, damageType);
         }
     }
     

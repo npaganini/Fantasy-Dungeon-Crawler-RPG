@@ -88,7 +88,7 @@ public class PlayerLogic : MonoBehaviour
                     } else if (hit.transform.CompareTag("Key"))
                     {
                         keys++;
-                        hit.transform.gameObject.active = false;
+                        hit.transform.gameObject.SetActive(false);
                         Debug.Log(keys);
                     }
                     break;
@@ -116,11 +116,6 @@ public class PlayerLogic : MonoBehaviour
             switchTimer = 0f;
             switchOnCd = true;
         }
-
-        // if(Input.GetKeyDown(KeyCode.Escape))
-        // {
-        //     PauseMenu.Pause();
-        // }
     }
     
     public void Rotate()
