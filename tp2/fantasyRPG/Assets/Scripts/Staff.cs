@@ -3,9 +3,9 @@
 public class Staff : Weapon
 {
     public GameObject fireball;
-    private bool attacking = false;
-    private Animator animCtrl;
-    private float accum = 0;
+    protected bool attacking = false;
+    protected Animator animCtrl;
+    protected float accum = 0;
     public Transform fireballPos;
     public Transform rotation;
 
@@ -16,15 +16,7 @@ public class Staff : Weapon
             accum += Time.deltaTime; 
             if (accum > 1)
             {
-                var staff = Instantiate(fireball, fireballPos.position, rotation.rotation).GetComponent<Fireball>();
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit)) {
-                    staff.DirectionVector = hit.point;
-                }
-                attacking = false;
-                accum = 0;
+                Shoot();
             }
         }
     }
@@ -36,4 +28,19 @@ public class Staff : Weapon
         animCtrl.SetInteger("MeleeType_int", 2);
         attacking = true;
     }
+    
+    protected virtual void Shoot()
+    {
+        var staff = Instantiate(fireball, fireballPos.position, rotation.rotation).GetComponent<Fireball>();
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit)) {
+            staff.DirectionVector = hit.point;
+        }
+        attacking = false;
+        accum = 0;
+    }
+    
+    
 }
