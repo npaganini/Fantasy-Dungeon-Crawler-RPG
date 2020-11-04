@@ -8,9 +8,14 @@ public class Arrow : Projectile
 
     public override void OnTriggerEnter(Collider col)
     {
-        if (string.Compare(col.gameObject.tag, "Enemy", StringComparison.Ordinal) == 0)
+        Debug.Log(col.gameObject.tag);
+        
+        if (col.gameObject.CompareTag("Player"))
         {
-            col.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
+            col.gameObject.GetComponent<PlayerLogic>().Attacked(5);
+        }else if (col.gameObject.CompareTag("Enemy"))
+        {
+            col.gameObject.GetComponent<EnemyManager>().Attacked(20, DamageType);
         }
         Destroy(gameObject);
     }

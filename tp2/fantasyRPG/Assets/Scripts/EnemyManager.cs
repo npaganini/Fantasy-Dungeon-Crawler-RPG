@@ -20,9 +20,11 @@ public class EnemyManager : MonoBehaviour
     public PlayerLogic PlayerLogic;
     public float enemyDamage;
 
-    private bool attacking;
-    private float attackingCoolDown;
-
+    protected bool attacking;
+    protected float attackingCoolDown;
+    public float coolDown = 2; 
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,7 @@ public class EnemyManager : MonoBehaviour
         cc = GetComponent<CharacterController>();
         PlayerLogic = player.GetComponent<PlayerLogic>();
     }
+    
 
     // Update is called once per frame
     void Update()
@@ -43,7 +46,11 @@ public class EnemyManager : MonoBehaviour
             if (attacking)
             {
                 attackingCoolDown += Time.deltaTime;
-                attacking = !(attackingCoolDown > 2);
+                if (attackingCoolDown > coolDown)
+                {
+                    attacking = false;
+                    attackingCoolDown = 0;
+                }
             }
             if (LineOfSight())
             {
@@ -62,7 +69,7 @@ public class EnemyManager : MonoBehaviour
             }
         }
     }
-    private void Chase ()
+    protected void Chase ()
     {
         LookAt();
         var moveDirection = transform.forward;
@@ -75,12 +82,12 @@ public class EnemyManager : MonoBehaviour
          
     }
     
-    private void LookAt(){
+    protected void LookAt(){
         Quaternion rotation= Quaternion.LookRotation(player.transform.position - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * Damping);
     }
-    
-    public bool LineOfSight ()
+
+    protected virtual bool LineOfSight ()
     {
         var distance = Vector3.Distance(player.transform.position, transform.position);
         if (distance <= fov) {
@@ -102,7 +109,6 @@ public class EnemyManager : MonoBehaviour
             anmCtrl.SetInteger("MeleeType_int", 1);
             PlayerLogic.Attacked(enemyDamage);
             attacking = true;
-            attackingCoolDown = 0;
         }
     }
 

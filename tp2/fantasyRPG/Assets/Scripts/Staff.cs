@@ -16,7 +16,13 @@ public class Staff : Weapon
             accum += Time.deltaTime; 
             if (accum > 1)
             {
-                Instantiate(fireball, fireballPos.position, rotation.rotation);
+                var staff = Instantiate(fireball, fireballPos.position, rotation.rotation).GetComponent<Fireball>();
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit)) {
+                    staff.DirectionVector = hit.point;
+                }
                 attacking = false;
                 accum = 0;
             }

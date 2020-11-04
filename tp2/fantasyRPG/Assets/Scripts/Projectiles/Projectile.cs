@@ -4,17 +4,11 @@ public abstract class Projectile : PoolItem
 {
     public new Camera camera;
     protected Rigidbody Rb;
-    protected Vector3 DirectionVector;
+    public Vector3 DirectionVector;
 
     private void Start()
     {
         Rb = GetComponent<Rigidbody>();
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit)) {
-            DirectionVector = hit.point;
-        }
     }
 
     void Update()

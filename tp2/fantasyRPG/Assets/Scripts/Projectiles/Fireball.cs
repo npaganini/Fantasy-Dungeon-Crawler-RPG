@@ -11,7 +11,7 @@ public class Fireball : Projectile
 
     public override void OnTriggerEnter(Collider other)
     {
-        if (string.Compare(other.gameObject.tag, "Enemy", StringComparison.Ordinal) == 0)
+        if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
         }
