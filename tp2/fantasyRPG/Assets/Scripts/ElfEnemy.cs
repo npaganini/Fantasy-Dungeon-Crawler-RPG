@@ -5,7 +5,13 @@ using UnityEngine.Animations;
 public class ElfEnemy : EnemyManager
 {
     public GameObject bow;
-    
+
+    public override void Start()
+    {
+        base.Start();
+        enemyType = TypeOfDamage.Ranged;
+    }
+
     protected override bool LineOfSight ()
     {
         var distance = Vector3.Distance(player.transform.position, transform.position);
@@ -21,7 +27,7 @@ public class ElfEnemy : EnemyManager
         return false;
     }
 
-    private void Attack()
+    protected override void Attack()
     {
         if (!attacking)
         {

@@ -4,7 +4,13 @@ using UnityEngine.Animations;
 public class WizardEnemy : EnemyManager
 {
     public GameObject staff;
-    
+
+    public override void Start()
+    {
+        base.Start();
+        enemyType = TypeOfDamage.Magic;
+    }
+
     protected override bool LineOfSight ()
     {
         var distance = Vector3.Distance(player.transform.position, transform.position);
@@ -20,7 +26,7 @@ public class WizardEnemy : EnemyManager
         return false;
     }
 
-    private void Attack()
+    protected override void Attack()
     {
         if (!attacking)
         {

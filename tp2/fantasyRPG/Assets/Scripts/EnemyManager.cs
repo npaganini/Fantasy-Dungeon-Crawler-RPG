@@ -5,13 +5,13 @@ using Random = UnityEngine.Random;
 public class EnemyManager : MonoBehaviour
 {
     
-    private float life = 100;
+    protected float life = 100;
 
     private bool onCoolDown = false;
     private float cooldown = 0;
     private CharacterController cc;
     private float gravity = 30.87f;
-    private TypeOfDamage enemyType = TypeOfDamage.Melee; // todo: change to different enemy types
+    protected TypeOfDamage enemyType = TypeOfDamage.Melee; // todo: change to different enemy types
     public float speed = 2f;
     public GameObject player;
     public float Damping= 6.0f;
@@ -26,7 +26,7 @@ public class EnemyManager : MonoBehaviour
     
     
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         anmCtrl = GetComponent<Animator>();
         cc = GetComponent<CharacterController>();
@@ -35,7 +35,7 @@ public class EnemyManager : MonoBehaviour
     
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if (life <= 0)
         {
@@ -101,7 +101,7 @@ public class EnemyManager : MonoBehaviour
         return false;
     }
 
-    private void Attack()
+    protected virtual void Attack()
     {
         if (!attacking)
         {

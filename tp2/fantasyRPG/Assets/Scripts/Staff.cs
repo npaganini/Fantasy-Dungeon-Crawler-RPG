@@ -24,8 +24,8 @@ public class Staff : Weapon
     public override void Attack(Animator animCtrl)
     {
         this.animCtrl = animCtrl;
-        animCtrl.SetInteger("WeaponType_int", 12);
-        animCtrl.SetInteger("MeleeType_int", 2);
+        animCtrl.SetInteger("WeaponType_int", 11);
+        animCtrl.SetBool("Shoot_cross", true);
         attacking = true;
     }
     
