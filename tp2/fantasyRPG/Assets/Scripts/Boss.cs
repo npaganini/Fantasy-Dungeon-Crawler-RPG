@@ -11,6 +11,7 @@ public class Boss : EnemyManager
     public EnemyBow bow;
     public Weapon[] weapons;
     public Weapon equipped;
+    public ParticleSystem[] particles;
 
     private float switchCooldown = 5f;
     private float timer = 0f;
@@ -41,7 +42,7 @@ public class Boss : EnemyManager
         enemyType = (TypeOfDamage)UnityEngine.Random.Range(0, Enum.GetValues(typeof(TypeOfDamage)).Length);
         equipped = weapons[(int) enemyType];
         equipped.gameObject.SetActive(true);
-
+        particles[(int)enemyType].Play();
     }
 
     protected override void Attack()
