@@ -10,7 +10,11 @@ public class Bow : Weapon
     protected float accum = 0;
     public Transform shotPos;
     public Transform rotation;
-
+    protected AudioSource audiosource;
+    void Start()
+    {
+        audiosource = gameObject.GetComponent<AudioSource>();
+    }
     void Update()
     {
         //Debug.Log(shotPos.position);
@@ -30,6 +34,7 @@ public class Bow : Weapon
         //animCtrl.Play("BowShoot");
         animCtrl.SetInteger("WeaponType_int", 11);
         animCtrl.SetBool("Shoot_cross", true);
+        audiosource.Play();
         attacking = true;
     }
 
@@ -37,7 +42,7 @@ public class Bow : Weapon
     {
      
         var arrowG = Instantiate(arrow, shotPos.position, rotation.rotation).GetComponent<Arrow>();
-                
+        audiosource.Play();
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 

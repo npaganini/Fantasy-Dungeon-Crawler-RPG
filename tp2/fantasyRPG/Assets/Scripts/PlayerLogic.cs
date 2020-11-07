@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerLogic : MonoBehaviour
 {
+    protected AudioSource audiosource;
     public CharacterController cc;
     public Animator anmCtrl;
     public float speed = 2f;
@@ -31,7 +32,7 @@ public class PlayerLogic : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
-
+        audiosource = GetComponent<AudioSource>();
         anmCtrl = GetComponent<Animator>();
         equipped = weapons[0];
     }
@@ -107,6 +108,7 @@ public class PlayerLogic : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Tab) && !switchOnCd)
         {
+            audiosource.Play();
             equipped.gameObject.SetActive(false);
             eqIndex++;
             if (eqIndex == weapons.Length)

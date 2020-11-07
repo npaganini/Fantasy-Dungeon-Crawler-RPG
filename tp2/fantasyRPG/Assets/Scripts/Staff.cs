@@ -8,6 +8,12 @@ public class Staff : Weapon
     protected float accum = 0;
     public Transform fireballPos;
     public Transform rotation;
+    protected AudioSource audiosource;
+
+    void Start()
+    {
+        audiosource = gameObject.GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -26,6 +32,7 @@ public class Staff : Weapon
         this.animCtrl = animCtrl;
         animCtrl.SetInteger("WeaponType_int", 11);
         animCtrl.SetBool("Shoot_cross", true);
+        audiosource.Play();
         attacking = true;
     }
     

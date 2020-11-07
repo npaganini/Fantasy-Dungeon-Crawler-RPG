@@ -13,10 +13,12 @@ public class Arrow : Projectile
         if (col.gameObject.CompareTag("Player"))
         {
             col.gameObject.GetComponent<PlayerLogic>().Attacked(5);
+           
         }else if (col.gameObject.CompareTag("Enemy"))
         {
             col.gameObject.GetComponent<EnemyManager>().Attacked(20, DamageType);
         }
+        
         Destroy(gameObject);
     }
 

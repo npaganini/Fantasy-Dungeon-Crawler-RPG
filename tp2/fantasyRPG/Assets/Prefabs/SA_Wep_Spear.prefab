@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 0}
+  DirectionVector: {x: 0, y: 0, z: 0}
 --- !u!65 &3720059112176360563
 BoxCollider:
   m_ObjectHideFlags: 0

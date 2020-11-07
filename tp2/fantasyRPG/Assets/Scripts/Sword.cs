@@ -10,12 +10,12 @@ public class Sword : Weapon
     private bool attacking = false;
     private int damagePerAttack = 50;
     private TypeOfDamage damageType = TypeOfDamage.Melee;
-
+    private AudioSource audiosource;
     private float attackingCoolDown;
     // Start is called before the first frame update
     void Start()
     {
-        
+        audiosource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -40,6 +40,7 @@ public class Sword : Weapon
         Debug.Log("SWORD ATACK");
         animCtrl.SetInteger("WeaponType_int", 12);
         animCtrl.SetInteger("MeleeType_int", 1);
+        audiosource.Play();
     }
     
     public void OnTriggerEnter(Collider col)

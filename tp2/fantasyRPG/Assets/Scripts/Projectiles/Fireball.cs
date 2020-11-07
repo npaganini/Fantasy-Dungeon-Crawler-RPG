@@ -16,8 +16,10 @@ public class Fireball : Projectile
             other.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
         } else if (other.gameObject.CompareTag("Player")) 
         {
+
             other.gameObject.GetComponent<PlayerLogic>().Attacked(15); 
         }
+        
         Explode();
         Destroy(gameObject);
     }

@@ -12,12 +12,13 @@ public class Boss : EnemyManager
     public Weapon[] weapons;
     public Weapon equipped;
     public ParticleSystem[] particles;
-
+    protected AudioSource audiosource;
     private float switchCooldown = 5f;
     private float timer = 0f;
     // Start is called before the first frame update
     public override void Start()
     {
+        audiosource = GetComponent<AudioSource>();
         base.Start();
         enemyType = TypeOfDamage.Melee;
         life = 200;
@@ -38,6 +39,7 @@ public class Boss : EnemyManager
 
     private void SwitchDamageType()
     {
+        audiosource.Play();
         equipped.gameObject.SetActive(false);
         enemyType = (TypeOfDamage)UnityEngine.Random.Range(0, Enum.GetValues(typeof(TypeOfDamage)).Length);
         equipped = weapons[(int) enemyType];
