@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class EnemyManager : MonoBehaviour
@@ -9,7 +10,6 @@ public class EnemyManager : MonoBehaviour
 
     private bool onCoolDown = false;
     private float cooldown = 0;
-    private CharacterController cc;
     private float gravity = 30.87f;
     protected TypeOfDamage enemyType = TypeOfDamage.Melee; // todo: change to different enemy types
     public float speed = 2f;
@@ -22,15 +22,16 @@ public class EnemyManager : MonoBehaviour
 
     protected bool attacking;
     protected float attackingCoolDown;
-    public float coolDown = 2; 
-    
+    public float coolDown = 2;
+
+    private NavMeshAgent _agent;
     
     // Start is called before the first frame update
     public virtual void Start()
     {
         anmCtrl = GetComponent<Animator>();
-        cc = GetComponent<CharacterController>();
         PlayerLogic = player.GetComponent<PlayerLogic>();
+        _agent = GetComponent<NavMeshAgent>();
     }
     
 
@@ -59,7 +60,6 @@ public class EnemyManager : MonoBehaviour
             else
             {
                 anmCtrl.SetFloat("Speed_f", 0);
-                
             }
 
             if (onCoolDown)
@@ -71,13 +71,8 @@ public class EnemyManager : MonoBehaviour
     }
     protected void Chase ()
     {
-        LookAt();
         var moveDirection = transform.forward;
-     
-        moveDirection *= speed;
-     
-        moveDirection.y -= gravity * Time.deltaTime;
-        cc.Move(moveDirection * Time.deltaTime);
+        _agent.SetDestination(player.transform.position);
         anmCtrl.SetFloat("Speed_f", speed);
          
     }

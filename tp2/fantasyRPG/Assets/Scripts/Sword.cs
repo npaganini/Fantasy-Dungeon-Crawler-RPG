@@ -37,7 +37,8 @@ public class Sword : Weapon
 
     public override void Attack(Animator animCtrl)
     {
-        animCtrl.SetInteger("WeaponType_int", 11);
+        Debug.Log("SWORD ATACK");
+        animCtrl.SetInteger("WeaponType_int", 12);
         animCtrl.SetInteger("MeleeType_int", 1);
     }
     
