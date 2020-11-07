@@ -5,6 +5,7 @@ using UnityEngine.Animations;
 public class ElfEnemy : EnemyManager
 {
     public GameObject bow;
+    public float range;
 
     public override void Start()
     {
@@ -16,7 +17,7 @@ public class ElfEnemy : EnemyManager
     {
         var distance = Vector3.Distance(player.transform.position, transform.position);
         if (distance <= fov) {
-            if (distance < 160)
+            if (distance < range)
             {
                 LookAt();
                 Attack();

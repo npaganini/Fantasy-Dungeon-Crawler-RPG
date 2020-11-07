@@ -41,6 +41,7 @@ public class EnemyManager : MonoBehaviour
         if (life <= 0)
         {
             anmCtrl.SetBool("Dead", true);
+            _agent.SetDestination(transform.position);
         }
         else
         {

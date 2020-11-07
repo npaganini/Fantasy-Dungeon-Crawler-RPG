@@ -4,6 +4,7 @@ using UnityEngine.Animations;
 public class WizardEnemy : EnemyManager
 {
     public GameObject staff;
+    public float range;
 
     public override void Start()
     {
@@ -15,7 +16,7 @@ public class WizardEnemy : EnemyManager
     {
         var distance = Vector3.Distance(player.transform.position, transform.position);
         if (distance <= fov) {
-            if (distance < 160)
+            if (distance < range)
             {
                 LookAt();
                 Attack();
