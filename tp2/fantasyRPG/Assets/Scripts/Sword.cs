@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Sword : Weapon
@@ -12,6 +9,8 @@ public class Sword : Weapon
     private TypeOfDamage damageType = TypeOfDamage.Melee;
     private AudioSource audiosource;
     private float attackingCoolDown;
+    public Sprite icon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,5 +50,9 @@ public class Sword : Weapon
             col.gameObject.GetComponent<EnemyManager>().Attacked(damagePerAttack, damageType);
         }
     }
-    
+
+    public override Sprite GetIcon()
+    {
+        return icon;
+    }
 }

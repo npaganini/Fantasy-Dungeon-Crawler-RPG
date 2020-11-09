@@ -2,39 +2,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerLogic : MonoBehaviour
 {
+    // camera and rotation
+    public Transform cameraHolder;
     protected AudioSource audiosource;
     public CharacterController cc;
     public Animator anmCtrl;
     public float speed = 2f;
     public float interactDistance = 4f;
-    // camera and rotation
-    public Transform cameraHolder;
+    public Slider healthSlider;
     public float mouseSensitivity = 2f;
     public float upLimit = -50;
     public float downLimit = 50;
     public Weapon[] weapons;
     public Weapon equipped;
+    public Image equippedWeaponIcon;
     private int eqIndex = 0;
     private float gravity = 30.87f;
     private float verticalSpeed = 0;
-
     private float switchCooldown = 1f;
     private float switchTimer = 0f;
     private bool switchOnCd = false;
     private float life = 100;
     private float resetCoolDown;
     private int keys = 0;
+    public TextMeshProUGUI amountOfKeys;
+
     void Start()
     {
         cc = GetComponent<CharacterController>();
         audiosource = GetComponent<AudioSource>();
         anmCtrl = GetComponent<Animator>();
-        equipped = weapons[0];
+        SetEquippedWeapon(0);
+        UpdateHealth();
     }
     
     // Update is called once per frame
@@ -90,6 +96,7 @@ public class PlayerLogic : MonoBehaviour
                     {
                         keys++;
                         hit.transform.gameObject.SetActive(false);
+                        amountOfKeys.text = keys.ToString();
                         Debug.Log(keys);
                     }
                     break;
@@ -113,7 +120,7 @@ public class PlayerLogic : MonoBehaviour
             eqIndex++;
             if (eqIndex == weapons.Length)
                 eqIndex = 0;
-            equipped = weapons[eqIndex];
+            SetEquippedWeapon(eqIndex);
             equipped.gameObject.SetActive(true);
             switchTimer = 0f;
             switchOnCd = true;
@@ -159,11 +166,22 @@ public class PlayerLogic : MonoBehaviour
     public void Attacked( float damage)
     {
         life -= damage;
-        Debug.Log("PLAYER LIFE:" + life);
+        UpdateHealth();
         if (life <= 0)
         {
             anmCtrl.SetBool("Dead", true);
             
         }
+    }
+
+    private void UpdateHealth()
+    {
+        healthSlider.value = life;
+    }
+
+    private void SetEquippedWeapon(int index)
+    {
+        equipped = weapons[index];
+        equippedWeaponIcon.GetComponent<Image>().sprite = equipped.GetIcon();
     }
 }

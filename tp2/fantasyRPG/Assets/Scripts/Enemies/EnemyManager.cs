@@ -1,7 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class EnemyManager : MonoBehaviour
 
     private bool onCoolDown = false;
     private float cooldown = 0;
-    private float gravity = 30.87f;
+    // private float gravity = 30.87f;
     protected TypeOfDamage enemyType = TypeOfDamage.Melee; // todo: change to different enemy types
     public float speed = 2f;
     public GameObject player;
