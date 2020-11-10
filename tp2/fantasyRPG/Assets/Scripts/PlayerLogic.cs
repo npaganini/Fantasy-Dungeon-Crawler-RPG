@@ -34,6 +34,9 @@ public class PlayerLogic : MonoBehaviour
     private int keys = 0;
     public TextMeshProUGUI amountOfKeys;
 
+    private bool isRegenerating = false;
+    private float regenCd = 10;
+    private float regenTimer = 0f;
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -46,6 +49,24 @@ public class PlayerLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(life < 100 && isRegenerating)
+        {
+            life += 1;
+            UpdateHealth();
+            if (life == 100)
+                isRegenerating = false;
+        }
+        if(life < 100 && !isRegenerating)
+        {
+            regenTimer += Time.deltaTime;
+            if(regenTimer >= regenCd)
+            {
+                isRegenerating = true;
+                regenTimer = 0f;
+            }
+
+        }
+
         if (life <= 0)
         {
             resetCoolDown += Time.deltaTime;
@@ -96,6 +117,7 @@ public class PlayerLogic : MonoBehaviour
                     {
                         keys++;
                         hit.transform.gameObject.SetActive(false);
+                        Destroy(hit.transform.gameObject);
                         amountOfKeys.text = keys.ToString();
                         Debug.Log(keys);
                     }
@@ -173,7 +195,10 @@ public class PlayerLogic : MonoBehaviour
             
         }
     }
-
+    public void Regenerate()
+    {
+        
+    }
     private void UpdateHealth()
     {
         healthSlider.value = life;
