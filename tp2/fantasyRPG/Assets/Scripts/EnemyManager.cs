@@ -60,6 +60,7 @@ public class EnemyManager : MonoBehaviour
             }
             else
             {
+                _agent.SetDestination(transform.position);
                 anmCtrl.SetFloat("Speed_f", 0);
             }
 
