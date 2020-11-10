@@ -6,5 +6,7 @@ abstract public class Weapon : MonoBehaviour
 {
     // Start is called before the first frame update
     
-    virtual public void Attack(Animator anmCtrl) { }
+    public virtual void Attack(Animator anmCtrl) { }
+
+    public abstract Sprite GetIcon();
 }

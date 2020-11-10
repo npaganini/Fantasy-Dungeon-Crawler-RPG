@@ -9,6 +9,7 @@ public class Staff : Weapon
     public Transform fireballPos;
     public Transform rotation;
     protected AudioSource audiosource;
+    public Sprite icon;
 
     void Start()
     {
@@ -48,6 +49,9 @@ public class Staff : Weapon
         attacking = false;
         accum = 0;
     }
-    
-    
+
+    public override Sprite GetIcon()
+    {
+        return icon;
+    }
 }

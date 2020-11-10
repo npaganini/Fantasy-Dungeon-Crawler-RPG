@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bow : Weapon
 {
@@ -11,6 +9,8 @@ public class Bow : Weapon
     public Transform shotPos;
     public Transform rotation;
     protected AudioSource audiosource;
+    public Sprite icon;
+
     void Start()
     {
         audiosource = gameObject.GetComponent<AudioSource>();
@@ -52,5 +52,9 @@ public class Bow : Weapon
         attacking = false;
         accum = 0;
     }
-    
+
+    public override Sprite GetIcon()
+    {
+        return icon;
+    }
 }
