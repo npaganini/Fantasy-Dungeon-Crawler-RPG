@@ -189,15 +189,13 @@ public class PlayerLogic : MonoBehaviour
     {
         life -= damage;
         UpdateHealth();
+        isRegenerating = false;
+        regenTimer = 0f;
         if (life <= 0)
         {
             anmCtrl.SetBool("Dead", true);
             
         }
-    }
-    public void Regenerate()
-    {
-        
     }
     private void UpdateHealth()
     {
