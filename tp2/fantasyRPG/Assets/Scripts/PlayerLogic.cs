@@ -35,7 +35,7 @@ public class PlayerLogic : MonoBehaviour
     public TextMeshProUGUI amountOfKeys;
 
     private bool isRegenerating = false;
-    private float regenCd = 10;
+    private float regenCd = 8f;
     private float regenTimer = 0f;
     void Start()
     {
