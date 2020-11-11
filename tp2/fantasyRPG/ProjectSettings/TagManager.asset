@@ -10,6 +10,7 @@ TagManager:
   - Bow
   - Enemy
   - Key
+  - Wall
   layers:
   - Default
   - TransparentFX

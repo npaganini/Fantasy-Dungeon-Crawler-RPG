@@ -10,11 +10,11 @@ public class Door : MonoBehaviour
     public bool onCooldown = false;
     public bool isJailDoor;
     public int keysToOpen;
+    public List<EnemyManager> enemiesToActivate;
     
     // Start is called before the first frame update
     void Update()
     {
-
         if (onCooldown)
         {
             timer += Time.deltaTime;
@@ -59,18 +59,22 @@ public class Door : MonoBehaviour
             isOpen = !isOpen;
         }
 
+        foreach (var enemy in enemiesToActivate)
+        {
+            enemy.Activate();
+        }
+
     }
 
     public void Close()
     {
-        if (isJailDoor)
-        {
-            gameObject.transform.GetChild(0).transform.Rotate(0f, 90f, 0f);
-        }
-        else
-        {
-            transform.Rotate(0f, 90f, 0f);
-        }
-        
+        //if (isJailDoor)
+        //{
+          //  gameObject.transform.GetChild(0).transform.Rotate(0f, 90f, 0f);
+        //}
+        //else
+        //{
+          //  transform.Rotate(0f, 90f, 0f);
+        //}
     }
 }

@@ -10,19 +10,22 @@ public class EnemyManager : MonoBehaviour
     private float cooldown = 0;
     // private float gravity = 30.87f;
     protected TypeOfDamage enemyType = TypeOfDamage.Melee; // todo: change to different enemy types
-    public float speed = 2f;
     public GameObject player;
     public float Damping= 6.0f;
-    public float fov= 160.0f;
     public Animator anmCtrl;
     public PlayerLogic PlayerLogic;
     public float enemyDamage;
-
+    
     protected bool attacking;
     protected float attackingCoolDown;
     public float coolDown = 2;
 
     private NavMeshAgent _agent;
+
+    private bool isDead = false;
+    private float accumDead = 0;
+    public bool isActive = false;
+    
     
     // Start is called before the first frame update
     public virtual void Start()
@@ -36,10 +39,24 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
+        if (!isActive)
+        {
+            return;
+        }
+        if (isDead)
+        {
+            accumDead += Time.deltaTime;
+            if (accumDead > 4)
+            {
+                gameObject.active = false;
+            }
+            return;
+        }
         if (life <= 0)
         {
             anmCtrl.SetBool("Dead", true);
             _agent.SetDestination(transform.position);
+            isDead = true;
         }
         else
         {
@@ -73,7 +90,7 @@ public class EnemyManager : MonoBehaviour
     {
         var moveDirection = transform.forward;
         _agent.SetDestination(player.transform.position);
-        anmCtrl.SetFloat("Speed_f", speed);
+        anmCtrl.SetFloat("Speed_f", 2);
          
     }
     
@@ -85,15 +102,12 @@ public class EnemyManager : MonoBehaviour
     protected virtual bool LineOfSight ()
     {
         var distance = Vector3.Distance(player.transform.position, transform.position);
-        if (distance <= fov) {
-            if (distance < 2.5)
-            {
-                Attack();
-                return false;
-            }
-            return true;
+        if (distance < 2.5)
+        {
+            Attack();
+            return false;
         }
-        return false;
+        return true;
     }
 
     protected virtual void Attack()
@@ -155,4 +169,10 @@ public class EnemyManager : MonoBehaviour
         }
         return damage;
     }
+
+    public void Activate()
+    {
+        isActive = true;
+    }
+    
 }

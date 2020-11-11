@@ -15,6 +15,9 @@ public class Boss : EnemyManager
     protected AudioSource audiosource;
     private float switchCooldown = 5f;
     private float timer = 0f;
+
+    public float fov;
+    
     // Start is called before the first frame update
     public override void Start()
     {

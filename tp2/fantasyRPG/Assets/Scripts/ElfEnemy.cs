@@ -1,4 +1,5 @@
 
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -16,16 +17,29 @@ public class ElfEnemy : EnemyManager
     protected override bool LineOfSight ()
     {
         var distance = Vector3.Distance(player.transform.position, transform.position);
-        if (distance <= fov) {
-            if (distance < range)
+        if (distance < range)
+        {
+            var playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 2, player.transform.position.z);
+            RaycastHit[] hits = Physics.
+                RaycastAll(transform.position, playerPos - transform.position, range)
+                .OrderBy(h=>h.distance).ToArray();
+            foreach (var hit in hits)
             {
-                LookAt();
-                Attack();
-                return false;
+                if (hit.transform.gameObject.CompareTag("Player"))
+                {
+                    break;
+                }
+                if (hit.transform.gameObject.CompareTag("Wall") || hit.transform.gameObject.CompareTag("Door"))
+                {
+                    return true;
+                }
             }
-            return true;
+            LookAt();
+            Attack();
+            return false;
         }
-        return false;
+        return true;
+    
     }
 
     protected override void Attack()
