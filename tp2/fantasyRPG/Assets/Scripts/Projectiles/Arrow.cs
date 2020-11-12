@@ -25,5 +25,6 @@ public class Arrow : Projectile
     protected override void Stuck()
     {
         Rb.constraints =  RigidbodyConstraints.FreezePosition;
+        Destroy(gameObject);
     }
 }
