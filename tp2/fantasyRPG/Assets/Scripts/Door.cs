@@ -59,9 +59,12 @@ public class Door : MonoBehaviour
             isOpen = !isOpen;
         }
 
-        foreach (var enemy in enemiesToActivate)
+        if (isOpen)
         {
-            enemy.Activate();
+            foreach (var enemy in enemiesToActivate)
+            {
+                enemy.Activate();
+            }
         }
 
     }
