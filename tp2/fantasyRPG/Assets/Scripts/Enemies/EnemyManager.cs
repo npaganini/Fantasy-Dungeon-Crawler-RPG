@@ -170,6 +170,11 @@ public class EnemyManager : MonoBehaviour
         return damage;
     }
 
+    public void Kill()
+    {
+        life = 0;
+    }
+
     public void Activate()
     {
         isActive = true;
