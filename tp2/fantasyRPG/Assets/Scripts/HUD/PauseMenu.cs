@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
@@ -58,4 +59,10 @@ public class PauseMenu : MonoBehaviour
         // FindObjectOfType<AudioManager>().changeVolume(volume); todo: add audio
         //audioMixer.SetFloat("volume", volume);
     }
+    
+    /*
+    public void ExitGame()
+    {
+        SceneManager.LoadScene("Scenes/StartMenu");
+    }*/
 }

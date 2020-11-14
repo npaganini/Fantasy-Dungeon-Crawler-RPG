@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviorSingleton<GameManager>
 {
     public GameObject gameManager;
     public TMP_Dropdown typeDropdown;
@@ -24,4 +24,5 @@ public class GameManager : MonoBehaviour
     {
         return typeDropdown.value;
     }
+
 }
