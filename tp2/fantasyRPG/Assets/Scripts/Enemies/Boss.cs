@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -16,7 +17,7 @@ public class Boss : EnemyManager
     private float switchCooldown = 5f;
     private float timer = 0f;
 
-    public float fov;
+    public float range;
     
     // Start is called before the first frame update
     public override void Start()
@@ -85,42 +86,36 @@ public class Boss : EnemyManager
     protected override bool LineOfSight()
     {
         var distance = Vector3.Distance(player.transform.position, transform.position);
-        if (distance <= fov)
+        switch (enemyType)
         {
-            switch (enemyType)
-            {
-                case TypeOfDamage.Magic:
-                case TypeOfDamage.Ranged:
-
+            case TypeOfDamage.Magic:
+            case TypeOfDamage.Ranged:
+                var playerPos = new Vector3(player.transform.position.x, player.transform.position.y + 2, player.transform.position.z);
+                RaycastHit[] hits = Physics.
+                    RaycastAll(transform.position, playerPos - transform.position, range)
+                    .OrderBy(h=>h.distance).ToArray();
+                foreach (var hit in hits)
+                {
+                    if (hit.transform.gameObject.CompareTag("Player"))
                     {
-                        if (distance < 160)
-                        {
-                            LookAt();
-                            Attack();
-                            return false;
-                        }
+                        break;
+                    }
+                    if (hit.transform.gameObject.CompareTag("Wall") || hit.transform.gameObject.CompareTag("Door"))
+                    {
                         return true;
                     }
-                case TypeOfDamage.Melee:
-                    if (distance < 2.5)
-                    {
-                        Attack();
-                        return false;
-                    }
-                    return true;
-            }
-            if (distance <= fov)
-            {
-                if (distance < 160)
+                }
+                LookAt();
+                Attack();
+                return false;
+            case TypeOfDamage.Melee:
+                if (distance < 2.5)
                 {
-                    LookAt();
                     Attack();
                     return false;
                 }
                 return true;
-            }
-            return false;
         }
-        return false;
+        return true;
     }
 }
