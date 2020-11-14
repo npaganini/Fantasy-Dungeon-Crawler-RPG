@@ -48,7 +48,7 @@ public class EnemyManager : MonoBehaviour
             accumDead += Time.deltaTime;
             if (accumDead > 4)
             {
-                gameObject.active = false;
+                gameObject.SetActive(false);
             }
             return;
         }
