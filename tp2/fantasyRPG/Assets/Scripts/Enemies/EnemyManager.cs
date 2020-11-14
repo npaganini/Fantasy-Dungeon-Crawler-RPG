@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour
 {
-    
+    public Slider healthBar;
     protected float life = 100;
 
     private bool onCoolDown = false;
@@ -120,13 +121,17 @@ public class EnemyManager : MonoBehaviour
             attacking = true;
         }
     }
-
+    private void UpdateHealth()
+    {
+        healthBar.value = life;
+    }
     public void Attacked(float damage, TypeOfDamage damageType)
     {
         if (!onCoolDown)
         {
             life -= getDamageAfterTypeComparison(damage, damageType);
             Debug.Log(life);
+            UpdateHealth();
             onCoolDown = true;
             cooldown = 0;
         }
