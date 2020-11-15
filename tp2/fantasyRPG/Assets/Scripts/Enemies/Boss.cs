@@ -33,19 +33,23 @@ public class Boss : EnemyManager
     // Update is called once per frame
     public override void Update()
     {
-        timer += Time.deltaTime;
-        if(timer >= switchCooldown)
+        if (isActive)
         {
-            timer = 0f;
-            SwitchDamageType();
-        }
+            timer += Time.deltaTime;
+            if (timer >= switchCooldown)
+            {
+                timer = 0f;
+                SwitchDamageType();
+            }
 
-        if (isDead && !sendWin)
-        {
-            sendWin = true;
-            PlayerLogic.Win();
+            if (isDead && !sendWin)
+            {
+                sendWin = true;
+                PlayerLogic.Win();
+            }
+
+            base.Update();
         }
-        base.Update();
     }
 
     private void SwitchDamageType()
