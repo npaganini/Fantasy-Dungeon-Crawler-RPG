@@ -136,6 +136,18 @@ public class EnemyManager : MonoBehaviour
             cooldown = 0;
         }
     }
+    
+    public void Attacked(float damage)
+    {
+        if (!onCoolDown)
+        {
+            life -= damage;
+            Debug.Log(life);
+            UpdateHealth();
+            onCoolDown = true;
+            cooldown = 0;
+        }
+    }
 
     private float getDamageAfterTypeComparison(float damage, TypeOfDamage damageType)
     {
