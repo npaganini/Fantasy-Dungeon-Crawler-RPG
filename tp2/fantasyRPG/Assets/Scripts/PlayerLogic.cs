@@ -20,8 +20,8 @@ public class PlayerLogic : MonoBehaviour
     public float mouseSensitivity = 2f;
     public float upLimit = -50;
     public float downLimit = 50;
-    public Weapon[] weapons;
-    public Weapon equipped;
+    private readonly Weapon[] _weapons = new Weapon[2];
+    private Weapon _equipped;
     public Image equippedWeaponIcon;
     private int eqIndex = 0;
     private float gravity = 30.87f;
@@ -42,6 +42,7 @@ public class PlayerLogic : MonoBehaviour
         cc = GetComponent<CharacterController>();
         audiosource = GetComponent<AudioSource>();
         anmCtrl = GetComponent<Animator>();
+        SetWeaponArray();
         SetEquippedWeapon(0);
         UpdateHealth();
     }
@@ -115,9 +116,10 @@ public class PlayerLogic : MonoBehaviour
 
                     } else if (hit.transform.CompareTag("Key"))
                     {
+                        var objectToInteract = hit.transform.gameObject;
                         keys++;
-                        hit.transform.gameObject.SetActive(false);
-                        Destroy(hit.transform.gameObject);
+                        objectToInteract.SetActive(false);
+                        Destroy(objectToInteract);
                         amountOfKeys.text = keys.ToString();
                         Debug.Log(keys);
                     }
@@ -132,18 +134,17 @@ public class PlayerLogic : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            equipped.Attack(anmCtrl);
+            _equipped.Attack(anmCtrl);
             anmCtrl.SetFloat("Speed_f", 0f);
         }
         if (Input.GetKey(KeyCode.Tab) && !switchOnCd)
         {
             audiosource.Play();
-            equipped.gameObject.SetActive(false);
+            _equipped.gameObject.SetActive(false);
             eqIndex++;
-            if (eqIndex == weapons.Length)
+            if (eqIndex == _weapons.Length)
                 eqIndex = 0;
             SetEquippedWeapon(eqIndex);
-            equipped.gameObject.SetActive(true);
             switchTimer = 0f;
             switchOnCd = true;
         }
@@ -174,8 +175,9 @@ public class PlayerLogic : MonoBehaviour
         if (cc.isGrounded) verticalSpeed = 0;
         else verticalSpeed -= gravity * Time.deltaTime;
         Vector3 gravityMove = new Vector3(0, verticalSpeed, 0);
-        
-        Vector3 move = transform.forward * verticalMove + transform.right * horizontalMove;
+
+        var t = transform;
+        Vector3 move = t.forward * verticalMove + t.right * horizontalMove;
         cc.Move(speed * Time.deltaTime * move + gravityMove * Time.deltaTime);
         
         //Debug.Log("HORIZONTAL" + horizontalMove);
@@ -204,7 +206,32 @@ public class PlayerLogic : MonoBehaviour
 
     private void SetEquippedWeapon(int index)
     {
-        equipped = weapons[index];
-        equippedWeaponIcon.GetComponent<Image>().sprite = equipped.GetIcon();
+        _equipped = _weapons[index];
+        equippedWeaponIcon.GetComponent<Image>().sprite = _equipped.GetIcon();
+        _equipped.gameObject.SetActive(true);
+    }
+
+    private void SetWeaponArray()
+    {
+        var typeChosen = GameManager.Instance.GetTypeChosen();
+        switch (typeChosen)
+        {
+            case 0:    // magic & melee
+                _weapons[0] = gameObject.GetComponentInChildren<Staff>(true);
+                _weapons[1] = gameObject.GetComponentInChildren<Sword>(true);
+                break;
+            case 1:    // melee & ranged
+                _weapons[0] = gameObject.GetComponentInChildren<Sword>(true);
+                _weapons[1] = gameObject.GetComponentInChildren<Bow>(true);
+                break;
+            case 2:    // ranged & magic
+                _weapons[0] = gameObject.GetComponentInChildren<Bow>(true);
+                _weapons[1] = gameObject.GetComponentInChildren<Staff>(true);
+                break;
+            default:
+                Debug.Log("No weapon types selected!");
+                SceneManager.LoadScene("Scenes/MainMenu");
+                break;
+        }
     }
 }
