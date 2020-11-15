@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -17,6 +18,11 @@ public class PauseMenu : MonoBehaviour
     //     volumeslider = FindObjectOfType<Slider>(); todo: add audio
     //     volumeslider.value =  FindObjectOfType<AudioManager>().getVolume(); todo: add audio
     // }
+
+    public void Start()
+    {
+        Resume();
+    }
 
     public void Update()
     {
