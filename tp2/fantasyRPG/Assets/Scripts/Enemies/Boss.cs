@@ -18,14 +18,14 @@ public class Boss : EnemyManager
     private float timer = 0f;
 
     public float range;
-    
+    private bool sendWin = false;
+
     // Start is called before the first frame update
     public override void Start()
     {
         audiosource = GetComponent<AudioSource>();
         base.Start();
         enemyType = TypeOfDamage.Melee;
-        life = 2500;
         equipped = weapons[0];
     }
 
@@ -37,6 +37,12 @@ public class Boss : EnemyManager
         {
             timer = 0f;
             SwitchDamageType();
+        }
+
+        if (isDead && !sendWin)
+        {
+            sendWin = true;
+            PlayerLogic.Win();
         }
         base.Update();
     }

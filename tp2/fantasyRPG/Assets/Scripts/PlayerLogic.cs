@@ -37,6 +37,8 @@ public class PlayerLogic : MonoBehaviour
     private bool isRegenerating = false;
     private float regenCd = 8f;
     private float regenTimer = 0f;
+    private bool win = false;
+    
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -49,6 +51,13 @@ public class PlayerLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(anmCtrl.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        if (win)
+        {
+            Invoke("returnToMenu", 5.0f);
+            return;
+        }
+        
         if(life < 100 && isRegenerating)
         {
             life += 1;
@@ -207,4 +216,21 @@ public class PlayerLogic : MonoBehaviour
         equipped = weapons[index];
         equippedWeaponIcon.GetComponent<Image>().sprite = equipped.GetIcon();
     }
+
+    public void Win()
+    {
+        anmCtrl.SetBool("Win", true);
+        Debug.Log("PLAY");
+        win = true;
+        cameraHolder.localPosition = new Vector3(0.140000001f, 2.8900001f, 4.96999979f);
+        cameraHolder.localRotation = new Quaternion(0,1,0,0);
+    }
+
+    public void returnToMenu()
+    {
+        SceneManager.LoadScene("Scenes/StartMenu");
+    }
+    
+    
+    
 }

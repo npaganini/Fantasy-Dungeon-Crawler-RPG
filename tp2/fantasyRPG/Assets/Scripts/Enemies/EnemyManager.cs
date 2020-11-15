@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class EnemyManager : MonoBehaviour
 {
     public Slider healthBar;
-    protected float life = 100;
+    public float life;
 
     private bool onCoolDown = false;
     private float cooldown = 0;
@@ -23,7 +23,7 @@ public class EnemyManager : MonoBehaviour
 
     private NavMeshAgent _agent;
 
-    private bool isDead = false;
+    protected bool isDead = false;
     private float accumDead = 0;
     public bool isActive = false;
     
