@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.cursor.EnterPauseMenu();
         GetHighScoreName();
         GetHighScore();
     }

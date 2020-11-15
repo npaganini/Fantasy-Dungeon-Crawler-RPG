@@ -148,7 +148,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 435068444}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &435068446
 Camera:
   m_ObjectHideFlags: 0
@@ -328,7 +328,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursor: {fileID: 1768148625}
-  eventSystem: {fileID: 0}
 --- !u!4 &770039012
 Transform:
   m_ObjectHideFlags: 0
