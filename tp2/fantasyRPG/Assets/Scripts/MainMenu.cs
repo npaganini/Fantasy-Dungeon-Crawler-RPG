@@ -1,19 +1,17 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public TextMeshProUGUI highScoreName;
     public TextMeshProUGUI highScore;
     public TMP_Dropdown typeSelection;
     public Slider volumeSlider;
+
     private void Start()
     {
         GameManager.Instance.cursor.EnterPauseMenu();
-        GetHighScoreName();
         GetHighScore();
         AudioManager.Instance.setVolume(PlayerPrefs.GetFloat("vol"));
         SetVolumeSlider(PlayerPrefs.GetFloat("vol"));
@@ -22,11 +20,6 @@ public class MainMenu : MonoBehaviour
     public void BeginGame()
     {
         GameManager.Instance.StartGame(typeSelection.value);
-    }
-
-    private void GetHighScoreName()
-    {
-        highScoreName.SetText(PlayerPrefs.GetString("High Score Name", "Be the first to play!"));
     }
 
     private void GetHighScore()
@@ -44,6 +37,7 @@ public class MainMenu : MonoBehaviour
     {
         AudioManager.Instance.setVolume(volumeSlider.value);
     }
+
     public void SetVolumeSlider(float vol)
     {
         volumeSlider.value = vol;
