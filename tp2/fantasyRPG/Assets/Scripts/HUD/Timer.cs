@@ -19,4 +19,9 @@ public class Timer : MonoBehaviour
         int seconds = Mathf.FloorToInt(_timer - minutes * 60);
         timeSoFar.SetText(new StringBuilder(minutes.ToString("00")  + ":" + seconds.ToString("00")));
     }
+
+    public float getTime()
+    {
+        return _timer;
+    }
 }

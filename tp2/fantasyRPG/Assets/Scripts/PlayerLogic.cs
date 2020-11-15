@@ -38,6 +38,9 @@ public class PlayerLogic : MonoBehaviour
     private float regenCd = 8f;
     private float regenTimer = 0f;
     private bool win = false;
+
+    public GameObject timer;
+    
     
     void Start()
     {
@@ -52,7 +55,7 @@ public class PlayerLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(anmCtrl.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        //Debug.Log(anmCtrl.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         if (win)
         {
             Invoke("returnToMenu", 5.0f);
@@ -247,7 +250,6 @@ public class PlayerLogic : MonoBehaviour
     public void Win()
     {
         anmCtrl.SetBool("Win", true);
-        Debug.Log("PLAY");
         win = true;
         cameraHolder.localPosition = new Vector3(0.140000001f, 2.8900001f, 4.96999979f);
         cameraHolder.localRotation = new Quaternion(0,1,0,0);
@@ -255,7 +257,12 @@ public class PlayerLogic : MonoBehaviour
 
     public void returnToMenu()
     {
-        SceneManager.LoadScene("Scenes/StartMenu");
+        float currentTime = timer.GetComponent<Timer>().getTime();
+        if (PlayerPrefs.GetFloat("High Score", 0) < currentTime)
+        {
+            PlayerPrefs.SetFloat("High Score", currentTime);
+        }
+        SceneManager.LoadScene("Scenes/MainMenu");
     }
     
     
