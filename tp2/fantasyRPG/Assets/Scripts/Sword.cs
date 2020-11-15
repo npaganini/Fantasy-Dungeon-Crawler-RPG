@@ -5,7 +5,7 @@ public class Sword : Weapon
 {
     public CharacterController cc;
     private bool attacking = false;
-    private int damagePerAttack = 50;
+    private int damagePerAttack = 25;
     private TypeOfDamage damageType = TypeOfDamage.Melee;
     private AudioSource audiosource;
     private float attackingCoolDown;

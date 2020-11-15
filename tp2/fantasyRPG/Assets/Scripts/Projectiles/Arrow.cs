@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Arrow : Projectile
 {
-    private const int DamagePerAttack = 20;
+    private const int DamagePerAttack = 30;
     private const TypeOfDamage DamageType = TypeOfDamage.Ranged;
 
     public override void OnTriggerEnter(Collider col)

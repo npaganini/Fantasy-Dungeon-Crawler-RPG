@@ -14,7 +14,7 @@ public class Boss : EnemyManager
     public Weapon equipped;
     public ParticleSystem[] particles;
     protected AudioSource audiosource;
-    private float switchCooldown = 5f;
+    private float switchCooldown = 7f;
     private float timer = 0f;
 
     public float range;
@@ -25,7 +25,7 @@ public class Boss : EnemyManager
         audiosource = GetComponent<AudioSource>();
         base.Start();
         enemyType = TypeOfDamage.Melee;
-        life = 200;
+        life = 2500;
         equipped = weapons[0];
     }
 

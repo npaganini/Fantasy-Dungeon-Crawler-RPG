@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Fireball : Projectile
 {
-    private const int DamagePerAttack = 35;
+    private const int DamagePerAttack = 32;
     private const float MaxTimeStuck = 2.5f;
     private const TypeOfDamage DamageType = TypeOfDamage.Magic;
     private float _timeStuck = 0;
