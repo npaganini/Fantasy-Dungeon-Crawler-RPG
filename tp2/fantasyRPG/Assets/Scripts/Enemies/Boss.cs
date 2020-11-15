@@ -26,7 +26,7 @@ public class Boss : EnemyManager
         audiosource = GetComponent<AudioSource>();
         base.Start();
         enemyType = TypeOfDamage.Melee;
-        life = 1;
+        life = 2000;
         equipped = weapons[0];
     }
 
