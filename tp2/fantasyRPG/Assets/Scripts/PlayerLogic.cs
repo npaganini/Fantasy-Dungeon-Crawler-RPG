@@ -11,7 +11,8 @@ public class PlayerLogic : MonoBehaviour
 {
     // camera and rotation
     public Transform cameraHolder;
-    protected AudioSource audiosource;
+    public AudioSource changeWpSound;
+    public AudioSource victorySound;
     public CharacterController cc;
     public Animator anmCtrl;
     public float speed = 2f;
@@ -40,12 +41,11 @@ public class PlayerLogic : MonoBehaviour
     private bool win = false;
 
     public GameObject timer;
-    
+    public ParticleSystem victoryParticles;
     
     void Start()
     {
         cc = GetComponent<CharacterController>();
-        audiosource = GetComponent<AudioSource>();
         anmCtrl = GetComponent<Animator>();
         SetWeaponArray();
         SetEquippedWeapon(0);
@@ -59,6 +59,7 @@ public class PlayerLogic : MonoBehaviour
         if (win)
         {
             Invoke("returnToMenu", 5.0f);
+            
             return;
         }
         
@@ -151,7 +152,7 @@ public class PlayerLogic : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Tab) && !switchOnCd)
         {
-            audiosource.Play();
+            changeWpSound.Play();
             _equipped.gameObject.SetActive(false);
             eqIndex++;
             if (eqIndex == _weapons.Length)
@@ -249,10 +250,11 @@ public class PlayerLogic : MonoBehaviour
 
     public void Win()
     {
-        anmCtrl.SetBool("Win", true);
         win = true;
         cameraHolder.localPosition = new Vector3(0.140000001f, 2.8900001f, 4.96999979f);
         cameraHolder.localRotation = new Quaternion(0,1,0,0);
+        victoryParticles.Play();
+        victorySound.Play();
     }
 
     public void returnToMenu()

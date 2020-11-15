@@ -60,9 +60,9 @@ public class PauseMenu : MonoBehaviour
         //audioMixer.SetFloat("volume", volume);
     }
     
-    /*
+    
     public void ExitGame()
     {
         SceneManager.LoadScene("Scenes/MainMenu");
-    }*/
+    }
 }
