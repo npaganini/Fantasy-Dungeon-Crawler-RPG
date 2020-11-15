@@ -12,6 +12,7 @@ TagManager:
   - Key
   - Wall
   - KeyText
+  - TypeDropdown
   layers:
   - Default
   - TransparentFX

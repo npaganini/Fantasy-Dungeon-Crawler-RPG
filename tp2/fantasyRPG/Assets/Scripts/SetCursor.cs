@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SetCursor : MonoBehaviour
 {
@@ -8,8 +6,9 @@ public class SetCursor : MonoBehaviour
     public Texture2D crosshair;
     public Texture2D pauseMenu;
 
-    void Start(){
-        EnterGameMode();
+    void Start()
+    {
+        EnterPauseMenu();
     }
 
     public void EnterGameMode()

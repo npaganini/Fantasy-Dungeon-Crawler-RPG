@@ -32,8 +32,6 @@ public class Sword : Weapon
         
     }
 
-
-
     public override void Attack(Animator animCtrl)
     {
         Debug.Log("SWORD ATACK");

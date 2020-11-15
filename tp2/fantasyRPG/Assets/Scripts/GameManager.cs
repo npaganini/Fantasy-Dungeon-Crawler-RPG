@@ -1,28 +1,27 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using TMPro;
+﻿using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviorSingleton<GameManager>
 {
-    public GameObject gameManager;
-    public TMP_Dropdown typeDropdown;
     private int _typeIndexSelected;
+    public SetCursor cursor;
 
     void Start()
     {
-        DontDestroyOnLoad(gameManager);
+        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(cursor);
+        cursor.EnterPauseMenu();
+        SceneManager.LoadScene("Scenes/MainMenu");
     }
 
-    public void StartGame()
+    public void StartGame(int typeSelected)
     {
-        _typeIndexSelected = GetSelectedOption();
-        Debug.Log("Selected: " + _typeIndexSelected);
+        _typeIndexSelected = typeSelected;
+        cursor.EnterGameMode();
         SceneManager.LoadScene("Scenes/Demo");
     }
 
-    private int GetSelectedOption()
+    public int GetTypeChosen()
     {
-        return typeDropdown.value;
+        return _typeIndexSelected;
     }
-
 }

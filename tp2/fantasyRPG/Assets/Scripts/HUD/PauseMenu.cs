@@ -8,7 +8,7 @@ public class PauseMenu : MonoBehaviour
     // todo: add audio
     // public AudioMixer audioMixer;
     // public Slider volumeslider;
-    public SetCursor cursor;
+    private SetCursor _cursor;
     public GameObject pauseMenuUI;
     public GameObject player;
     private bool isGamePaused = false;
@@ -38,7 +38,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         isGamePaused = true;
         player.GetComponent<PlayerLogic>().enabled = false;
-        cursor.EnterPauseMenu();
+        GameManager.Instance.cursor.EnterPauseMenu();
         pauseMenuUI.SetActive(true);
         // Cursor.visible = true;
     }
@@ -49,7 +49,7 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Resumeee");
         pauseMenuUI.SetActive(false);
         player.GetComponent<PlayerLogic>().enabled = true;
-        cursor.EnterGameMode();
+        GameManager.Instance.cursor.EnterGameMode();
         isGamePaused = false;
         Time.timeScale = 1f;
     }
@@ -63,6 +63,6 @@ public class PauseMenu : MonoBehaviour
     /*
     public void ExitGame()
     {
-        SceneManager.LoadScene("Scenes/StartMenu");
+        SceneManager.LoadScene("Scenes/MainMenu");
     }*/
 }
