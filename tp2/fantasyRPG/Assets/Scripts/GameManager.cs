@@ -1,4 +1,5 @@
-﻿using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviorSingleton<GameManager>
 {
@@ -7,17 +8,20 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 
     void Start()
     {
+
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(cursor);
         cursor.EnterPauseMenu();
         SceneManager.LoadScene("Scenes/MainMenu");
+        AudioManager.Instance.setVolume(PlayerPrefs.GetFloat("vol"));
+
     }
 
     public void StartGame(int typeSelected)
     {
         _typeIndexSelected = typeSelected;
         cursor.EnterGameMode();
-        SceneManager.LoadScene("Scenes/Demo");
+        SceneManager.LoadScene("Scenes/Dungeon");
     }
 
     public int GetTypeChosen()

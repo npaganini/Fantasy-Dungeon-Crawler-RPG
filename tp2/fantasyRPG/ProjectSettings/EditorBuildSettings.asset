@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 3472bc24a7b54834e97f941070c93c6b
   - enabled: 1
-    path: Assets/Scenes/Demo.unity
+    path: Assets/Scenes/Dungeon.unity
     guid: c69974a43b267f84a978b3e7cc0c0591
   m_configObjects: {}

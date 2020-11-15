@@ -2,61 +2,29 @@
 using System;
 public class AudioManager : MonoBehaviorSingleton<AudioManager>
 {
-    public Sound[] sounds;
-    // Start is called before the first frame update
-    public override void Awake()
+    private AudioSource[] sources;
+    public AudioSource menuMusic;
+    private void Start()
     {
-        base.Awake();
-        DontDestroyOnLoad(this);
-        foreach (Sound s in sounds)
+        DontDestroyOnLoad(gameObject);
+        if (!PlayerPrefs.HasKey("vol"))
         {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
+            PlayerPrefs.SetFloat("vol", 100f);
+        }
+        else
+        {
+            setVolume(PlayerPrefs.GetFloat("vol"));
 
         }
     }
-
-    public float getVolume()
+    public void setVolume(float vol)
     {
-        return sounds[0].source.volume;
-    }
-    public void changeVolume(float f)
-    {
-        foreach (Sound s in sounds)
+        sources = FindObjectsOfType<AudioSource>();
+        foreach(var s in sources)
         {
-            s.source.volume = f;
+            s.volume = vol;
         }
-    }
-    public void Play(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-            return;
-        s.source.Play();
-    }
-    public bool isPlaying(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-            return false;
-        return s.source.isPlaying;
-    }
-    public void Stop(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-            return;
-        s.source.Stop();
+        PlayerPrefs.SetFloat("vol", vol);
     }
 
-    public void Pause(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-            return;
-        s.source.Pause();
-    }
 }

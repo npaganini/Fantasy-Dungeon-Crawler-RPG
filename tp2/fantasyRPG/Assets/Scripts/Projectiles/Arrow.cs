@@ -12,7 +12,7 @@ public class Arrow : Projectile
         
         if (col.gameObject.CompareTag("Player"))
         {
-            col.gameObject.GetComponent<PlayerLogic>().Attacked(5);
+            col.gameObject.GetComponent<PlayerLogic>().Attacked(10);
            
         }else if (col.gameObject.CompareTag("Enemy"))
         {

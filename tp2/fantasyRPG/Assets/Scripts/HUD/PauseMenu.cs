@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject player;
     private bool isGamePaused = false;
+    public Slider volumeSlider;
 
     // public void OnEnable(){
     //     volumeslider = FindObjectOfType<Slider>(); todo: add audio
@@ -21,6 +22,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Start()
     {
+        SetVolumeSlider(PlayerPrefs.GetFloat("vol"));
         Resume();
     }
 
@@ -59,16 +61,18 @@ public class PauseMenu : MonoBehaviour
         isGamePaused = false;
         Time.timeScale = 1f;
     }
-
-    public void SetVolume(float volume)
-    {
-        // FindObjectOfType<AudioManager>().changeVolume(volume); todo: add audio
-        //audioMixer.SetFloat("volume", volume);
-    }
-    
     
     public void ExitGame()
     {
         SceneManager.LoadScene("Scenes/MainMenu");
+    }
+
+    public void SetVolume()
+    {
+        AudioManager.Instance.setVolume(volumeSlider.value);
+    }
+    public void SetVolumeSlider(float vol)
+    {
+        volumeSlider.value = vol;
     }
 }

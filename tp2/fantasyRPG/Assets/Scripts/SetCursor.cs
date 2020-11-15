@@ -24,7 +24,7 @@ public class SetCursor : MonoBehaviour
 
     public void EnterPauseMenu()
     {
-        Cursor.SetCursor(pauseMenu, new Vector2(crosshair.width/2, crosshair.height/2), CursorMode.Auto);
+        Cursor.SetCursor(pauseMenu, new Vector2(crosshair.width/2, crosshair.height/3), CursorMode.Auto);
         Cursor.lockState = CursorLockMode.None;
     }
 }

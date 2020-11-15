@@ -50,6 +50,7 @@ public class PlayerLogic : MonoBehaviour
         SetWeaponArray();
         SetEquippedWeapon(0);
         UpdateHealth();
+        
     }
     
     // Update is called once per frame
@@ -86,7 +87,7 @@ public class PlayerLogic : MonoBehaviour
             resetCoolDown += Time.deltaTime;
             if (resetCoolDown > 3)
             {
-                SceneManager.LoadScene("Demo");
+                SceneManager.LoadScene("Scenes/MainMenu");
             }
             return;
         }
