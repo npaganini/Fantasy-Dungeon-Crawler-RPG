@@ -52,6 +52,12 @@ public class Door : MonoBehaviour
                 gameObject.transform.GetChild(0).transform.Rotate(0f, -90f, 0f);
                 isOpen = !isOpen;
             }
+            else
+            {
+                KeysText text = GameObject.FindGameObjectWithTag("KeyText").GetComponent<KeysText>();
+                text.SetAmount(keysToOpen);
+                text.ShowText();
+            }
         }
         else
         {
