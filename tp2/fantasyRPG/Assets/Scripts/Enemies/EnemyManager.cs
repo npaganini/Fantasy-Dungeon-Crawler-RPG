@@ -56,7 +56,8 @@ public class EnemyManager : MonoBehaviour
         if (life <= 0)
         {
             anmCtrl.SetBool("Dead", true);
-            _agent.SetDestination(transform.position);
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+            //_agent.SetDestination(transform.position);
             isDead = true;
         }
         else
@@ -190,6 +191,7 @@ public class EnemyManager : MonoBehaviour
     public void Kill()
     {
         life = 0;
+        UpdateHealth();
     }
 
     public void Activate()
