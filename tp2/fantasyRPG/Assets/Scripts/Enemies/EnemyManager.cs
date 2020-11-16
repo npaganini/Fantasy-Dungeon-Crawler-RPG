@@ -58,6 +58,7 @@ public class EnemyManager : MonoBehaviour
             anmCtrl.SetBool("Dead", true);
             _agent.SetDestination(transform.position);
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+            Destroy(GetComponent<BoxCollider>());
             isDead = true;
         }
         else
