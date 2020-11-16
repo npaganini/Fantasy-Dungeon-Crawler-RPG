@@ -13,7 +13,7 @@ public class Spikes : MonoBehaviour
     private Vector3 up;
     private Vector3 down;
     public float speed = 1f;
-
+    public bool active = true;
     public enum States
     {
         up,
@@ -41,6 +41,10 @@ public class Spikes : MonoBehaviour
     {
         
         accum += Time.deltaTime;
+        if (!active)
+        {
+            return;
+        }
         switch (currentState)
         {
             case States.up:

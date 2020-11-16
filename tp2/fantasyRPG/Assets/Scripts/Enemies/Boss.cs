@@ -14,9 +14,10 @@ public class Boss : EnemyManager
     public Weapon equipped;
     public ParticleSystem[] particles;
     protected AudioSource audiosource;
+    public BossMusic bossMusic;
     private float switchCooldown = 7f;
     private float timer = 0f;
-
+    public Spikes trap;
     public float range;
     private bool sendWin = false;
 
@@ -128,5 +129,14 @@ public class Boss : EnemyManager
                 return true;
         }
         return true;
+    }
+
+    public override void Activate()
+    {
+        base.Activate();
+        player.GetComponent<PlayerLogic>().dungeonAmbience.Stop();
+        bossMusic.PlayBossMusic();
+        Debug.Log("asd");
+        trap.active = false;
     }
 }

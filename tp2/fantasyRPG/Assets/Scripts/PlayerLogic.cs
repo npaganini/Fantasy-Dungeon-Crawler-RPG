@@ -40,6 +40,7 @@ public class PlayerLogic : MonoBehaviour
     private float regenTimer = 0f;
     private bool win = false;
 
+    public AudioSource dungeonAmbience;
     public GameObject timer;
     public ParticleSystem victoryParticles;
     

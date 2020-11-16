@@ -194,7 +194,7 @@ public class EnemyManager : MonoBehaviour
         UpdateHealth();
     }
 
-    public void Activate()
+    public virtual void Activate()
     {
         isActive = true;
     }
