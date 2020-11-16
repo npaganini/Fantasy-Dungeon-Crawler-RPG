@@ -12,9 +12,13 @@ public class Sword : Weapon
     public Sprite icon;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         audiosource = gameObject.GetComponent<AudioSource>();
+    }
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
@@ -34,6 +38,8 @@ public class Sword : Weapon
 
     public override void Attack(Animator animCtrl)
     {
+        if (audiosource != null)
+            audiosource.volume = PlayerPrefs.GetFloat("vol");
         Debug.Log("SWORD ATACK");
         animCtrl.SetInteger("WeaponType_int", 12);
         animCtrl.SetInteger("MeleeType_int", 1);

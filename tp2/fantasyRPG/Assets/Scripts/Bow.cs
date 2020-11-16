@@ -30,6 +30,8 @@ public class Bow : Weapon
 
     public override void Attack(Animator animCtrl)
     {
+        if (audiosource != null)
+            audiosource.volume = PlayerPrefs.GetFloat("vol");
         this.animCtrl = animCtrl;
         //animCtrl.Play("BowShoot");
         animCtrl.SetInteger("WeaponType_int", 11);

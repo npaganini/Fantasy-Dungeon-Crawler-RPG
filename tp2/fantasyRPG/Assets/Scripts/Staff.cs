@@ -11,9 +11,13 @@ public class Staff : Weapon
     protected AudioSource audiosource;
     public Sprite icon;
 
-    void Start()
+    private void Awake()
     {
         audiosource = gameObject.GetComponent<AudioSource>();
+    }
+    void Start()
+    {
+        
     }
 
     void Update()
@@ -30,6 +34,8 @@ public class Staff : Weapon
 
     public override void Attack(Animator animCtrl)
     {
+        if (audiosource != null)
+            audiosource.volume = PlayerPrefs.GetFloat("vol");
         this.animCtrl = animCtrl;
         animCtrl.SetInteger("WeaponType_int", 11);
         animCtrl.SetBool("Shoot_cross", true);
