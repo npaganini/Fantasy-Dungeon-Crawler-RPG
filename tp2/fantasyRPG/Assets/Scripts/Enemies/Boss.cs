@@ -27,7 +27,6 @@ public class Boss : EnemyManager
         audiosource = GetComponent<AudioSource>();
         base.Start();
         enemyType = TypeOfDamage.Melee;
-        life = 2000;
         equipped = weapons[0];
     }
 
@@ -136,7 +135,6 @@ public class Boss : EnemyManager
         base.Activate();
         player.GetComponent<PlayerLogic>().dungeonAmbience.Stop();
         bossMusic.PlayBossMusic();
-        Debug.Log("asd");
         trap.active = false;
     }
 }

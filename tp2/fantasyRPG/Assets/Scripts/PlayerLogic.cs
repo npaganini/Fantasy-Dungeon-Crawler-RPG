@@ -262,7 +262,7 @@ public class PlayerLogic : MonoBehaviour
     public void returnToMenu()
     {
         float currentTime = timer.GetComponent<Timer>().getTime();
-        if (PlayerPrefs.GetFloat("High Score", 0) < currentTime)
+        if (PlayerPrefs.GetFloat("High Score", float.MaxValue) > currentTime)
         {
             PlayerPrefs.SetFloat("High Score", currentTime);
         }

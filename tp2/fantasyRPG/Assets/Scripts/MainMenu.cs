@@ -11,10 +11,11 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        
         GameManager.Instance.cursor.EnterPauseMenu();
         GetHighScore();
-        AudioManager.Instance.setVolume(PlayerPrefs.GetFloat("vol"));
-        SetVolumeSlider(PlayerPrefs.GetFloat("vol"));
+        AudioManager.Instance.setVolume(PlayerPrefs.GetFloat("vol", 100f));
+        SetVolumeSlider(PlayerPrefs.GetFloat("vol", 100f));
     }
 
     public void BeginGame()
@@ -25,12 +26,19 @@ public class MainMenu : MonoBehaviour
     private void GetHighScore()
     {
         // get high score from persistant memory
-        var bestTime = PlayerPrefs.GetFloat("High Score", 0);
-        bestTime += Time.deltaTime;
-        // OnGUI();
-        int minutes = Mathf.FloorToInt(bestTime / 60F);
-        int seconds = Mathf.FloorToInt(bestTime - minutes * 60);
-        highScore.SetText(new StringBuilder(minutes.ToString("00")  + ":" + seconds.ToString("00")));
+        var bestTime = PlayerPrefs.GetFloat("High Score", -1f);
+        if(bestTime != -1){
+            bestTime += Time.deltaTime;
+            int minutes = Mathf.FloorToInt(bestTime / 60F);
+            int seconds = Mathf.FloorToInt(bestTime - minutes * 60);
+            highScore.SetText(new StringBuilder(minutes.ToString("00") + ":" + seconds.ToString("00")));
+        }
+        else
+        {
+            highScore.SetText("None!");
+        }
+        
+        
     }
 
     public void SetVolume()
