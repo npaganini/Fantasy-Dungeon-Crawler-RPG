@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
 {
     private int _typeIndexSelected;
     public SetCursor cursor;
+    public bool win = false;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
     public void StartGame(int typeSelected)
     {
         _typeIndexSelected = typeSelected;
+        win = false;
         cursor.EnterGameMode();
         SceneManager.LoadScene("Scenes/Dungeon");
     }
@@ -27,5 +29,15 @@ public class GameManager : MonoBehaviorSingleton<GameManager>
     public int GetTypeChosen()
     {
         return _typeIndexSelected;
+    }
+
+    public bool GetWin()
+    {
+        return win;
+    }
+
+    public void Win()
+    {
+        win = true;
     }
 }

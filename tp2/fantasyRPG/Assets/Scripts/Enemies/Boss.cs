@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -45,9 +43,14 @@ public class Boss : EnemyManager
             if (isDead && !sendWin)
             {
                 sendWin = true;
+                GameManager.Instance.Win();
+                EnemyManager[] enemies = FindObjectsOfType<EnemyManager>();
+                foreach (var enemy in enemies)
+                {
+                    enemy.PlayerWin();
+                }
                 PlayerLogic.Win();
             }
-
             base.Update();
         }
     }

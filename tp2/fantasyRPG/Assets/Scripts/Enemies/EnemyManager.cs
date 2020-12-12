@@ -199,5 +199,9 @@ public class EnemyManager : MonoBehaviour
     {
         isActive = true;
     }
-    
+
+    public void PlayerWin()
+    {
+        enabled = false;
+    }
 }

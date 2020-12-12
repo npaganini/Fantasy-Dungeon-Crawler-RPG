@@ -38,7 +38,6 @@ public class PlayerLogic : MonoBehaviour
     private bool isRegenerating = false;
     private float regenCd = 8f;
     private float regenTimer = 0f;
-    private bool win = false;
 
     public AudioSource dungeonAmbience;
     public GameObject timer;
@@ -58,7 +57,7 @@ public class PlayerLogic : MonoBehaviour
     void Update()
     {
         //Debug.Log(anmCtrl.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-        if (win)
+        if (GameManager.Instance.GetWin())
         {
             Invoke("returnToMenu", 5.0f);
             
@@ -252,7 +251,6 @@ public class PlayerLogic : MonoBehaviour
 
     public void Win()
     {
-        win = true;
         cameraHolder.localPosition = new Vector3(0.140000001f, 2.8900001f, 4.96999979f);
         cameraHolder.localRotation = new Quaternion(0,1,0,0);
         victoryParticles.Play();
