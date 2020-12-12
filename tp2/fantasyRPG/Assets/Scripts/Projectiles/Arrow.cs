@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Arrow : Projectile
 {
-    private const int DamagePerAttack = 30;
+    private const int DamagePerAttack = 20;
     private const TypeOfDamage DamageType = TypeOfDamage.Ranged;
 
     public override void OnTriggerEnter(Collider col)
@@ -14,9 +13,9 @@ public class Arrow : Projectile
         {
             col.gameObject.GetComponent<PlayerLogic>().Attacked(10);
            
-        }else if (col.gameObject.CompareTag("Enemy"))
+        } else if (col.gameObject.CompareTag("Enemy"))
         {
-            col.gameObject.GetComponent<EnemyManager>().Attacked(20, DamageType);
+            col.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
         }
         
         Destroy(gameObject);
@@ -25,6 +24,11 @@ public class Arrow : Projectile
     protected override void Stuck()
     {
         Rb.constraints =  RigidbodyConstraints.FreezePosition;
-        Destroy(gameObject);
+        TimeStuck +=  (0.5f * Time.deltaTime);
+        // gameObject.GetComponentInParent<BoxCollider>().enabled = false;
+        if (TimeStuck > MaxTimeStuck)
+        {
+            Destroy(gameObject);
+        }
     }
 }

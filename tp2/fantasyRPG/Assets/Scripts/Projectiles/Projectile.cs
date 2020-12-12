@@ -5,6 +5,8 @@ public abstract class Projectile : PoolItem
     public new Camera camera;
     protected Rigidbody Rb;
     public Vector3 DirectionVector;
+    protected const float MaxTimeStuck = 2.5f;
+    protected float TimeStuck = 0;
 
     private void Start()
     {

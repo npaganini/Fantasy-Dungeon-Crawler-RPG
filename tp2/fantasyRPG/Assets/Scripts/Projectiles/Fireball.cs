@@ -4,9 +4,7 @@ using UnityEngine;
 public class Fireball : Projectile
 {
     private const int DamagePerAttack = 32;
-    private const float MaxTimeStuck = 2.5f;
     private const TypeOfDamage DamageType = TypeOfDamage.Magic;
-    private float _timeStuck = 0;
     public GameObject explosionEffect;
 
     public override void OnTriggerEnter(Collider other)
@@ -16,7 +14,6 @@ public class Fireball : Projectile
             other.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
         } else if (other.gameObject.CompareTag("Player")) 
         {
-
             other.gameObject.GetComponent<PlayerLogic>().Attacked(15); 
         }
         
@@ -34,14 +31,12 @@ public class Fireball : Projectile
 
     protected override void Stuck()
     {
-        // Rb.constraints =  RigidbodyConstraints.FreezePosition;
-        if (_timeStuck == 0)
+        if (TimeStuck == 0)
         {
             Explode();
         }
-        _timeStuck +=  (0.5f * Time.deltaTime);
-        // gameObject.GetComponentInParent<BoxCollider>().enabled = false;
-        if (_timeStuck > MaxTimeStuck)
+        TimeStuck +=  (0.5f * Time.deltaTime);
+        if (TimeStuck > MaxTimeStuck)
         {
             Destroy(gameObject);
         }
