@@ -49,7 +49,7 @@ public class Boss : EnemyManager
                 {
                     enemy.PlayerWin();
                 }
-                PlayerLogic.Win();
+                playerLogic.Win();
             }
             base.Update();
         }
@@ -81,7 +81,7 @@ public class Boss : EnemyManager
                 case TypeOfDamage.Melee:
                     anmCtrl.SetInteger("WeaponType_int", 12);
                     anmCtrl.SetInteger("MeleeType_int", 1);
-                    PlayerLogic.Attacked(enemyDamage);
+                    playerLogic.Attacked(enemyDamage);
                     attacking = true;
                     break;
                 case TypeOfDamage.Ranged:

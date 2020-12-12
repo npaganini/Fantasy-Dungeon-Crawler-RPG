@@ -5,8 +5,8 @@ public class Sword : Weapon
 {
     public CharacterController cc;
     private bool attacking = false;
-    private int damagePerAttack = 25;
-    private TypeOfDamage damageType = TypeOfDamage.Melee;
+    private const int DamagePerAttack = 25;
+    private const TypeOfDamage DamageType = TypeOfDamage.Melee;
     private AudioSource audiosource;
     private float attackingCoolDown;
     public Sprite icon;
@@ -15,10 +15,6 @@ public class Sword : Weapon
     private void Awake()
     {
         audiosource = gameObject.GetComponent<AudioSource>();
-    }
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -33,14 +29,13 @@ public class Sword : Weapon
             attackingCoolDown += Time.deltaTime;
             attacking = (attackingCoolDown < .5);
         }
-        
     }
 
     public override void Attack(Animator animCtrl)
     {
         if (audiosource != null)
             audiosource.volume = PlayerPrefs.GetFloat("vol");
-        Debug.Log("SWORD ATACK");
+        Debug.Log("SWORD ATTACK");
         animCtrl.SetInteger("WeaponType_int", 12);
         animCtrl.SetInteger("MeleeType_int", 1);
         audiosource.Play();
@@ -48,10 +43,16 @@ public class Sword : Weapon
     
     public void OnTriggerEnter(Collider col)
     {
-
-        if (string.Compare(col.gameObject.tag, "Enemy", StringComparison.Ordinal) == 0 && attacking)
+        if (col.gameObject.CompareTag("Enemy") && attacking)
         {
-            col.gameObject.GetComponent<EnemyManager>().Attacked(damagePerAttack, damageType);
+            if (col.gameObject.name == "Head_jnt")
+            {
+                col.gameObject.GetComponentInParent<EnemyManager>().Attacked(DamagePerAttack * 2, DamageType);
+            }
+            else
+            {
+                col.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
+            }
         }
     }
 

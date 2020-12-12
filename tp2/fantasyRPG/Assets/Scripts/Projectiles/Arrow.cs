@@ -12,12 +12,18 @@ public class Arrow : Projectile
         if (col.gameObject.CompareTag("Player"))
         {
             col.gameObject.GetComponent<PlayerLogic>().Attacked(10);
-           
-        } else if (col.gameObject.CompareTag("Enemy"))
-        {
-            col.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
         }
-        
+        else if (col.gameObject.CompareTag("Enemy"))
+        {
+            if (col.gameObject.name == "Head_jnt")
+            {
+                col.gameObject.GetComponentInParent<EnemyManager>().Attacked(DamagePerAttack * 2, DamageType);
+            }
+            else
+            {
+                col.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
+            }
+        }
         Destroy(gameObject);
     }
 

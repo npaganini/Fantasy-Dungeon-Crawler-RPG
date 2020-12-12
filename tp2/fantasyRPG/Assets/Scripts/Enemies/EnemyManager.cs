@@ -7,14 +7,14 @@ public class EnemyManager : MonoBehaviour
     public Slider healthBar;
     public float life;
 
-    private bool onCoolDown = false;
-    private float cooldown = 0;
+    private bool _onCoolDown = false;
+    private float _cooldown = 0;
     // private float gravity = 30.87f;
-    protected TypeOfDamage enemyType = TypeOfDamage.Melee; // todo: change to different enemy types
+    protected TypeOfDamage enemyType = TypeOfDamage.Melee;
     public GameObject player;
-    public float Damping= 6.0f;
+    public float damping = 6.0f;
     public Animator anmCtrl;
-    public PlayerLogic PlayerLogic;
+    public PlayerLogic playerLogic;
     public float enemyDamage;
     
     protected bool attacking;
@@ -32,7 +32,7 @@ public class EnemyManager : MonoBehaviour
     public virtual void Start()
     {
         anmCtrl = GetComponent<Animator>();
-        PlayerLogic = player.GetComponent<PlayerLogic>();
+        playerLogic = player.GetComponent<PlayerLogic>();
         _agent = GetComponent<NavMeshAgent>();
     }
     
@@ -82,10 +82,10 @@ public class EnemyManager : MonoBehaviour
                 anmCtrl.SetFloat("Speed_f", 0);
             }
 
-            if (onCoolDown)
+            if (_onCoolDown)
             {
-                cooldown += Time.deltaTime;
-                onCoolDown = !(cooldown > .5);
+                _cooldown += Time.deltaTime;
+                _onCoolDown = !(_cooldown > .5);
             }
         }
     }
@@ -99,7 +99,7 @@ public class EnemyManager : MonoBehaviour
     
     protected void LookAt(){
         Quaternion rotation= Quaternion.LookRotation(player.transform.position - transform.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * Damping);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
     }
 
     protected virtual bool LineOfSight ()
@@ -119,7 +119,7 @@ public class EnemyManager : MonoBehaviour
         {
             anmCtrl.SetInteger("WeaponType_int", 12);
             anmCtrl.SetInteger("MeleeType_int", 1);
-            PlayerLogic.Attacked(enemyDamage);
+            playerLogic.Attacked(enemyDamage);
             attacking = true;
         }
     }
@@ -129,26 +129,31 @@ public class EnemyManager : MonoBehaviour
     }
     public void Attacked(float damage, TypeOfDamage damageType)
     {
-        if (!onCoolDown)
+        if (!_onCoolDown)
         {
             life -= getDamageAfterTypeComparison(damage, damageType);
             Debug.Log(life);
             UpdateHealth();
-            onCoolDown = true;
-            cooldown = 0;
+            _onCoolDown = true;
+            _cooldown = 0;
         }
     }
     
     public void Attacked(float damage)
     {
-        if (!onCoolDown)
+        if (!_onCoolDown)
         {
             life -= damage;
             Debug.Log(life);
             UpdateHealth();
-            onCoolDown = true;
-            cooldown = 0;
+            _onCoolDown = true;
+            _cooldown = 0;
         }
+    }
+
+    private bool WasItHeadshot()
+    {
+        return false;
     }
 
     private float getDamageAfterTypeComparison(float damage, TypeOfDamage damageType)

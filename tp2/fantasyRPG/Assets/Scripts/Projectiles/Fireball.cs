@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Fireball : Projectile
 {
@@ -11,12 +10,19 @@ public class Fireball : Projectile
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            other.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
-        } else if (other.gameObject.CompareTag("Player")) 
+            if (other.gameObject.name == "Head_jnt")
+            {
+                other.gameObject.GetComponentInParent<EnemyManager>().Attacked(DamagePerAttack * 2, DamageType);
+            }
+            else
+            {
+                other.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
+            }
+        }
+        else if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerLogic>().Attacked(15); 
         }
-        
         Explode();
         Destroy(gameObject);
     }
