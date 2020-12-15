@@ -107,7 +107,7 @@ public class PlayerLogic : MonoBehaviour
             }
         }
         //interact key
-        if (Input.GetKey(KeyCode.E)) 
+        if (Input.GetKey(KeyCode.E) || Input.GetButton("Interact")) 
         {
             RaycastHit[] allHits;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -146,12 +146,12 @@ public class PlayerLogic : MonoBehaviour
         {
             Debug.Log(keys);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Attack"))
         {
             _equipped.Attack(anmCtrl);
             anmCtrl.SetFloat("Speed_f", 0f);
         }
-        if (Input.GetKey(KeyCode.Tab) && !switchOnCd)
+        if ((Input.GetKey(KeyCode.Tab) || Input.GetButtonDown("SwitchWep")) && !switchOnCd)
         {
             changeWpSound.Play();
             _equipped.gameObject.SetActive(false);
