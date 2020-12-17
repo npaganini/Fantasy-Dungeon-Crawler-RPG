@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-
+using UnityEngine.EventSystems;
 public class PauseMenu : MonoBehaviour
 {
     // todo: add audio
@@ -14,6 +14,9 @@ public class PauseMenu : MonoBehaviour
     public GameObject player;
     private bool isGamePaused = false;
     public Slider volumeSlider;
+    public GameObject PauseFirstButton;
+    public GameObject OptionsFirstButton;
+    public GameObject LastSelected;
 
     // public void OnEnable(){
     //     volumeslider = FindObjectOfType<Slider>(); todo: add audio
@@ -25,7 +28,23 @@ public class PauseMenu : MonoBehaviour
         SetVolumeSlider(PlayerPrefs.GetFloat("vol"));
         Resume();
     }
-
+    public void OnEnable()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        //set selected button
+        EventSystem.current.SetSelectedGameObject(PauseFirstButton);
+        LastSelected = PauseFirstButton;
+    }
+    public void OptionsMenu()
+    {
+        EventSystem.current.SetSelectedGameObject(OptionsFirstButton);
+        LastSelected = OptionsFirstButton;
+    }
+    public void BackToMenu()
+    {
+        EventSystem.current.SetSelectedGameObject(PauseFirstButton);
+        LastSelected = PauseFirstButton;
+    }
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Menu"))
