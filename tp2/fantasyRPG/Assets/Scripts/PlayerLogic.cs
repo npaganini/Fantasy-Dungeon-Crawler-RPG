@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +8,7 @@ public class PlayerLogic : MonoBehaviour
 {
     // camera and rotation
     public Transform cameraHolder;
+
     public AudioSource changeWpSound;
     public AudioSource victorySound;
     public CharacterController cc;
@@ -42,7 +40,7 @@ public class PlayerLogic : MonoBehaviour
     public AudioSource dungeonAmbience;
     public GameObject timer;
     public ParticleSystem victoryParticles;
-    
+
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -50,20 +48,17 @@ public class PlayerLogic : MonoBehaviour
         SetWeaponArray();
         SetEquippedWeapon(0);
         UpdateHealth();
-        
     }
-    
-    // Update is called once per frame
+
     void Update()
     {
         //Debug.Log(anmCtrl.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         if (GameManager.Instance.GetWin())
         {
             Invoke("returnToMenu", 5.0f);
-            
             return;
         }
-        
+
         if(life < 100 && isRegenerating)
         {
             life += 1;
@@ -79,9 +74,7 @@ public class PlayerLogic : MonoBehaviour
                 isRegenerating = true;
                 regenTimer = 0f;
             }
-
         }
-
         if (life <= 0)
         {
             resetCoolDown += Time.deltaTime;
@@ -106,6 +99,7 @@ public class PlayerLogic : MonoBehaviour
                 switchOnCd = false;
             }
         }
+
         //interact key
         if (Input.GetKey(KeyCode.E) || Input.GetButton("Interact")) 
         {
@@ -113,7 +107,7 @@ public class PlayerLogic : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             allHits = Physics.RaycastAll(ray, 100).OrderBy(h=>h.distance).ToArray();
             foreach(RaycastHit hit in allHits){
-                Debug.Log(hit.transform.name);
+                // Debug.Log(hit.transform.name);
                 if (!hit.transform.CompareTag("Player"))
                 {
                     if (hit.transform.CompareTag("Door"))
@@ -163,7 +157,7 @@ public class PlayerLogic : MonoBehaviour
             switchOnCd = true;
         }
     }
-    
+
     public void Rotate()
     {
         if (Time.deltaTime != 0)
@@ -213,6 +207,7 @@ public class PlayerLogic : MonoBehaviour
             
         }
     }
+
     private void UpdateHealth()
     {
         healthSlider.value = life;
@@ -266,7 +261,4 @@ public class PlayerLogic : MonoBehaviour
         }
         SceneManager.LoadScene("Scenes/MainMenu");
     }
-    
-    
-    
 }

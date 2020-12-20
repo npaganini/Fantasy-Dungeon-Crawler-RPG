@@ -2,8 +2,6 @@
 using System.Linq;
 using UnityEngine;
 
-
-
 public class Boss : EnemyManager
 {
     public EnemyStaff staff;

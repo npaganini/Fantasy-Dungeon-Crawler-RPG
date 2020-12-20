@@ -1,6 +1,5 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Animations;
 
 public class WizardEnemy : EnemyManager
 {
@@ -50,6 +49,4 @@ public class WizardEnemy : EnemyManager
             attacking = true;
         }
     }
-    
-    
 }

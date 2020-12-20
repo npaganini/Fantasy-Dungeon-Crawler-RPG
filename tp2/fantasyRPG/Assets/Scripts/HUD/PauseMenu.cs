@@ -73,8 +73,6 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        // Cursor.visible = false;
-        Debug.Log("Resumeee");
         pauseMenuUI.SetActive(false);
         player.GetComponent<PlayerLogic>().enabled = true;
         GameManager.Instance.cursor.EnterGameMode();

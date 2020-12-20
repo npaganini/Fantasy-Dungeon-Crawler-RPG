@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
@@ -9,14 +10,14 @@ public class EnemyManager : MonoBehaviour
 
     private bool _onCoolDown = false;
     private float _cooldown = 0;
-    // private float gravity = 30.87f;
+    // private float _gravity = 30.87f;
     protected TypeOfDamage enemyType = TypeOfDamage.Melee;
     public GameObject player;
     public float damping = 6.0f;
     public Animator anmCtrl;
     public PlayerLogic playerLogic;
     public float enemyDamage;
-    
+    public GameObject itemDrop;
     protected bool attacking;
     protected float attackingCoolDown;
     public float coolDown = 2;
@@ -49,6 +50,7 @@ public class EnemyManager : MonoBehaviour
             accumDead += Time.deltaTime;
             if (accumDead > 4)
             {
+                DropItem();
                 gameObject.SetActive(false);
             }
             return;
@@ -89,6 +91,7 @@ public class EnemyManager : MonoBehaviour
             }
         }
     }
+
     protected void Chase ()
     {
         var moveDirection = transform.forward;
@@ -123,16 +126,18 @@ public class EnemyManager : MonoBehaviour
             attacking = true;
         }
     }
+
     private void UpdateHealth()
     {
         healthBar.value = life;
     }
+
     public void Attacked(float damage, TypeOfDamage damageType)
     {
         if (!_onCoolDown)
         {
             life -= getDamageAfterTypeComparison(damage, damageType);
-            Debug.Log(life);
+            // Debug.Log(life);
             UpdateHealth();
             _onCoolDown = true;
             _cooldown = 0;
@@ -208,5 +213,12 @@ public class EnemyManager : MonoBehaviour
     public void PlayerWin()
     {
         enabled = false;
+    }
+
+    private void DropItem()
+    {
+        var t = this.transform;
+        var p = t.position;
+        Instantiate(itemDrop, new Vector3(p.x, p.y + 1.43f, p.z), t.rotation);
     }
 }

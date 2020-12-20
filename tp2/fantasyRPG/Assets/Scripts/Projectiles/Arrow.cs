@@ -7,8 +7,7 @@ public class Arrow : Projectile
 
     public override void OnTriggerEnter(Collider col)
     {
-        Debug.Log(col.gameObject.tag);
-        
+        // Debug.Log(col.gameObject.tag);
         if (col.gameObject.CompareTag("Player"))
         {
             col.gameObject.GetComponent<PlayerLogic>().Attacked(10);
