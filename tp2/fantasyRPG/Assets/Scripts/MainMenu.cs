@@ -17,7 +17,6 @@ public class MainMenu : MonoBehaviour
     public GameObject LastSelected;
     private void Start()
     {
-        
         GameManager.Instance.cursor.EnterPauseMenu();
         GetHighScore();
         AudioManager.Instance.setVolume(PlayerPrefs.GetFloat("vol", 100f));
@@ -29,6 +28,7 @@ public class MainMenu : MonoBehaviour
         if(EventSystem.current.currentSelectedGameObject == null)
             EventSystem.current.SetSelectedGameObject(LastSelected);
     }
+
     public void OnEnable()
     {
         EventSystem.current.SetSelectedGameObject(null);
@@ -36,21 +36,24 @@ public class MainMenu : MonoBehaviour
         LastSelected = MenuFirstButton;
         EventSystem.current.SetSelectedGameObject(MenuFirstButton);
     }
+
     public void BeginGame()
     {
         GameManager.Instance.StartGame(typeSelection.value);
     }
+
     public void OpenOptions()
     {
         EventSystem.current.SetSelectedGameObject(OptionsFirstButton);
         LastSelected = OptionsFirstButton;
     }
+
     public void OpenControls()
     {
         EventSystem.current.SetSelectedGameObject(ControlOptionsButton);
         LastSelected = ControlOptionsButton;
-
     }
+
     public void PlayButton()
     {
         EventSystem.current.SetSelectedGameObject(PlayFirstButton);
@@ -62,11 +65,13 @@ public class MainMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(PickTypeFirstButton);
         LastSelected = PickTypeFirstButton;
     }
+
     public void BackToMain()
     {
         EventSystem.current.SetSelectedGameObject(MenuFirstButton);
         LastSelected = MenuFirstButton;
     }
+
     private void GetHighScore()
     {
         // get high score from persistant memory
@@ -81,8 +86,6 @@ public class MainMenu : MonoBehaviour
         {
             highScore.SetText("None!");
         }
-        
-        
     }
 
     public void SetVolume()
