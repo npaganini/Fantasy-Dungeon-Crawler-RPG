@@ -219,6 +219,6 @@ public class EnemyManager : MonoBehaviour
     {
         var t = this.transform;
         var p = t.position;
-        Instantiate(itemDrop, new Vector3(p.x, p.y + 1.43f, p.z), t.rotation);
+        Instantiate(itemDrop, new Vector3(p.x, p.y + 1.43f, p.z), itemDrop.transform.rotation);
     }
 }
