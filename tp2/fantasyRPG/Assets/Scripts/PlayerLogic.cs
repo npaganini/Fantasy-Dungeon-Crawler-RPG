@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,7 +29,8 @@ public class PlayerLogic : MonoBehaviour
     private float switchCooldown = 1f;
     private float switchTimer = 0f;
     private bool switchOnCd = false;
-    private float life = 100;
+    private const float MAXHealth = 100;
+    private float life;
     private float resetCoolDown;
     private int keys = 0;
     public TextMeshProUGUI amountOfKeys;
@@ -45,6 +47,7 @@ public class PlayerLogic : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         anmCtrl = GetComponent<Animator>();
+        life = MAXHealth;
         SetWeaponArray();
         SetEquippedWeapon(0);
         UpdateHealth();
@@ -59,14 +62,14 @@ public class PlayerLogic : MonoBehaviour
             return;
         }
 
-        if(life < 100 && isRegenerating)
+        if(life < MAXHealth && isRegenerating)
         {
             life += 1;
             UpdateHealth();
-            if (life == 100)
+            if (life == MAXHealth)
                 isRegenerating = false;
         }
-        if(life < 100 && !isRegenerating)
+        if(life < MAXHealth && !isRegenerating)
         {
             regenTimer += Time.deltaTime;
             if(regenTimer >= regenCd)
@@ -122,14 +125,33 @@ public class PlayerLogic : MonoBehaviour
                             Debug.Log(Vector3.Distance(transform.position, hit.transform.position));
                         }
 
-                    } else if (hit.transform.CompareTag("Key"))
+                    }
+                    else if (hit.transform.CompareTag("Key"))
                     {
                         var objectToInteract = hit.transform.gameObject;
                         keys++;
                         objectToInteract.SetActive(false);
                         Destroy(objectToInteract);
                         amountOfKeys.text = keys.ToString();
-                        Debug.Log(keys);
+                    } else if (hit.transform.CompareTag("Drop"))
+                    {
+                        var item = hit.transform.gameObject;
+                        BuffItem itemType = item.GetComponent<EnemyDrop>().GetTypeOfDrop();
+                        switch (itemType)
+                        {
+                            case BuffItem.Armor:
+                                GainArmor();
+                                break;
+                            case BuffItem.Health:
+                                RegainHealth();
+                                break;
+                            case BuffItem.Shield:
+                                GainShields();
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
+                        Destroy(item);
                     }
                     break;
                 }
@@ -195,7 +217,7 @@ public class PlayerLogic : MonoBehaviour
         anmCtrl.SetFloat("Speed_f", spd);
     }
 
-    public void Attacked( float damage)
+    public void Attacked(float damage)
     {
         life -= damage;
         UpdateHealth();
@@ -204,7 +226,6 @@ public class PlayerLogic : MonoBehaviour
         if (life <= 0)
         {
             anmCtrl.SetBool("Dead", true);
-            
         }
     }
 
@@ -260,5 +281,27 @@ public class PlayerLogic : MonoBehaviour
             PlayerPrefs.SetFloat("High Score", currentTime);
         }
         SceneManager.LoadScene("Scenes/MainMenu");
+    }
+
+    private void GainArmor()
+    {
+        return;
+    }
+
+    private void RegainHealth()
+    {
+        Debug.Log(life);
+        life += 30f;
+        Debug.Log(life);
+        if (life > MAXHealth)
+        {
+            life = MAXHealth;
+        }
+        UpdateHealth();
+    }
+
+    private void GainShields()
+    {
+        return;
     }
 }

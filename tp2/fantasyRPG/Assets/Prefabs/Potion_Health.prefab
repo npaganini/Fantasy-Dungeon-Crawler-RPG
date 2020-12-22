@@ -283,12 +283,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4173680155241510}
-  - component: {fileID: -2499591378491231048}
   - component: {fileID: 606806999772514790}
-  - component: {fileID: 5243190331593127680}
+  - component: {fileID: 2162690428930669990}
+  - component: {fileID: 4934469157928659997}
   m_Layer: 0
   m_Name: Potion_Health
-  m_TagString: Untagged
+  m_TagString: Drop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -310,18 +310,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2499591378491231048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999239547283070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57cd79e576070334f9fc012565588844, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &606806999772514790
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -338,8 +326,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &5243190331593127680
-MeshCollider:
+--- !u!65 &2162690428930669990
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -348,7 +336,18 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 2681d1ae61ffe4b0ab792259fa7cf760, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4934469157928659997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999239547283070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4f31decb62316d49b959aefd99a1148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

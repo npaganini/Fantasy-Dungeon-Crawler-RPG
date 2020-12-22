@@ -13,6 +13,7 @@ TagManager:
   - Wall
   - KeyText
   - TypeDropdown
+  - Drop
   layers:
   - Default
   - TransparentFX

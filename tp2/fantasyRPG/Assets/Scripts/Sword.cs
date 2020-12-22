@@ -35,7 +35,6 @@ public class Sword : Weapon
     {
         if (audiosource != null)
             audiosource.volume = PlayerPrefs.GetFloat("vol");
-        Debug.Log("SWORD ATTACK");
         animCtrl.SetInteger("WeaponType_int", 12);
         animCtrl.SetInteger("MeleeType_int", 1);
         audiosource.Play();
