@@ -17,6 +17,8 @@ public class PlayerLogic : MonoBehaviour
     public float speed = 2f;
     public float interactDistance = 4f;
     public Slider healthSlider;
+    public Slider shieldSlider;
+    public Slider armorSlider;
     public float mouseSensitivity = 2f;
     public float upLimit = -50;
     public float downLimit = 50;
@@ -30,7 +32,11 @@ public class PlayerLogic : MonoBehaviour
     private float switchTimer = 0f;
     private bool switchOnCd = false;
     private const float MAXHealth = 100;
+    private const float MAXShield = 100;
+    private const float MAXArmor = 3;
     private float life;
+    private float _shield;
+    private float _armor;
     private float resetCoolDown;
     private int keys = 0;
     public TextMeshProUGUI amountOfKeys;
@@ -48,6 +54,8 @@ public class PlayerLogic : MonoBehaviour
         cc = GetComponent<CharacterController>();
         anmCtrl = GetComponent<Animator>();
         life = MAXHealth;
+        _shield = 0;
+        _armor = 0;
         SetWeaponArray();
         SetEquippedWeapon(0);
         UpdateHealth();
@@ -219,8 +227,32 @@ public class PlayerLogic : MonoBehaviour
 
     public void Attacked(float damage)
     {
-        life -= damage;
-        UpdateHealth();
+        if (_armor > 0)
+        {
+            damage /= 2;
+            _armor -= 1;
+            UpdateArmor();
+        }
+
+        if (_shield > 0)
+        {
+            float leftOverDamage = damage - _shield; // 5 - 5
+            if (leftOverDamage > 0)
+            {
+                _shield = 0;
+                LoseHealth(leftOverDamage);
+            }
+            else if (leftOverDamage <= 0)
+            {
+                _shield -= damage;
+            }
+            UpdateShield();
+        }
+        else
+        {
+            LoseHealth(damage);
+        }
+
         isRegenerating = false;
         regenTimer = 0f;
         if (life <= 0)
@@ -229,9 +261,25 @@ public class PlayerLogic : MonoBehaviour
         }
     }
 
+    private void LoseHealth(float damage)
+    {
+        life -= damage;
+        UpdateHealth();
+    }
+
     private void UpdateHealth()
     {
         healthSlider.value = life;
+    }
+
+    private void UpdateShield()
+    {
+        shieldSlider.value = _shield;
+    }
+
+    private void UpdateArmor()
+    {
+        armorSlider.value = _armor;
     }
 
     private void SetEquippedWeapon(int index)
@@ -285,14 +333,13 @@ public class PlayerLogic : MonoBehaviour
 
     private void GainArmor()
     {
-        return;
+        _armor = MAXArmor;
+        UpdateArmor();
     }
 
     private void RegainHealth()
     {
-        Debug.Log(life);
         life += 30f;
-        Debug.Log(life);
         if (life > MAXHealth)
         {
             life = MAXHealth;
@@ -302,6 +349,11 @@ public class PlayerLogic : MonoBehaviour
 
     private void GainShields()
     {
-        return;
+        _shield += 20;
+        if (_shield > MAXShield)
+        {
+            _shield = MAXShield;
+        }
+        UpdateShield();
     }
 }
