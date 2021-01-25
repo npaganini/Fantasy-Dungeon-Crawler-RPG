@@ -41,7 +41,6 @@ public class PlayerLogic : MonoBehaviour
     private int keys = 0;
     public TextMeshProUGUI amountOfKeys;
 
-    private bool isRegenerating = false;
     private float regenCd = 8f;
     private float regenTimer = 0f;
 
@@ -63,29 +62,15 @@ public class PlayerLogic : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(anmCtrl.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+        
+        //Debug.Log("SHIELD: " + _shield);
+        //Debug.Log("ARMOR: " + _armor);
         if (GameManager.Instance.GetWin())
         {
             Invoke("returnToMenu", 5.0f);
             return;
         }
-
-        if(life < MAXHealth && isRegenerating)
-        {
-            life += 1;
-            UpdateHealth();
-            if (life == MAXHealth)
-                isRegenerating = false;
-        }
-        if(life < MAXHealth && !isRegenerating)
-        {
-            regenTimer += Time.deltaTime;
-            if(regenTimer >= regenCd)
-            {
-                isRegenerating = true;
-                regenTimer = 0f;
-            }
-        }
+        
         if (life <= 0)
         {
             resetCoolDown += Time.deltaTime;
@@ -130,7 +115,7 @@ public class PlayerLogic : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log(Vector3.Distance(transform.position, hit.transform.position));
+//                            Debug.Log(Vector3.Distance(transform.position, hit.transform.position));
                         }
 
                     }
@@ -253,7 +238,6 @@ public class PlayerLogic : MonoBehaviour
             LoseHealth(damage);
         }
 
-        isRegenerating = false;
         regenTimer = 0f;
         if (life <= 0)
         {

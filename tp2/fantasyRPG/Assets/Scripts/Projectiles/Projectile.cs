@@ -2,11 +2,9 @@
 
 public abstract class Projectile : PoolItem
 {
-    public new Camera camera;
     protected Rigidbody Rb;
     public Vector3 DirectionVector;
-    protected const float MaxTimeStuck = 2.5f;
-    protected float TimeStuck = 0;
+    protected bool Hit;
 
     private void Start()
     {
@@ -15,14 +13,11 @@ public abstract class Projectile : PoolItem
 
     void Update()
     {
-        if (Vector3.Distance(transform.position ,DirectionVector) > .1 )
+        if (!Hit)
         {
-            float step =  20 * Time.deltaTime;
+            float step = 20 * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, DirectionVector, step);
-        }
-        else
-        {
-            Stuck();
+            DirectionVector = transform.position + (DirectionVector - transform.position).normalized * 1000.0f;    
         }
     }
 

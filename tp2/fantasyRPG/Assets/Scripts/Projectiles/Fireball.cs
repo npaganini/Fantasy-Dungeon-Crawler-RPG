@@ -18,13 +18,17 @@ public class Fireball : Projectile
             {
                 other.gameObject.GetComponent<EnemyManager>().Attacked(DamagePerAttack, DamageType);
             }
+            Stuck();
         }
         else if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerLogic>().Attacked(15); 
+            Stuck();
         }
-        Explode();
-        Destroy(gameObject);
+        else if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door"))
+        {
+            Stuck();
+        }
     }
 
     private void Explode()
@@ -37,14 +41,9 @@ public class Fireball : Projectile
 
     protected override void Stuck()
     {
-        if (TimeStuck == 0)
-        {
-            Explode();
-        }
-        TimeStuck +=  (0.5f * Time.deltaTime);
-        if (TimeStuck > MaxTimeStuck)
-        {
-            Destroy(gameObject);
-        }
+        Hit = true;
+        Explode();
+        Destroy(gameObject);
+        
     }
 }
