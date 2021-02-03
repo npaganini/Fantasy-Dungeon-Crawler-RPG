@@ -39,9 +39,13 @@ public class PlayerLogic : MonoBehaviour
     private float _armor;
     private float resetCoolDown;
     private int keys = 0;
-    public TextMeshProUGUI amountOfKeys;
+    private bool isRegenerating = false;
 
-    private float regenCd = 8f;
+    
+    
+    public TextMeshProUGUI amountOfKeys;
+    
+    private float regenCd = 15f;
     private float regenTimer = 0f;
 
     public AudioSource dungeonAmbience;
@@ -58,17 +62,33 @@ public class PlayerLogic : MonoBehaviour
         SetWeaponArray();
         SetEquippedWeapon(0);
         UpdateHealth();
+        UpdateArmor();
     }
 
     void Update()
     {
         
-        //Debug.Log("SHIELD: " + _shield);
-        //Debug.Log("ARMOR: " + _armor);
         if (GameManager.Instance.GetWin())
         {
             Invoke("returnToMenu", 5.0f);
             return;
+        }
+        
+        if(life < MAXHealth && isRegenerating)
+        {
+            life += 1;
+            UpdateHealth();
+            if (life == MAXHealth)
+                isRegenerating = false;
+        }
+        if(life < MAXHealth && !isRegenerating)
+        {
+            regenTimer += Time.deltaTime;
+            if(regenTimer >= regenCd)
+            {
+                isRegenerating = true;
+                regenTimer = 0f;
+            }
         }
         
         if (life <= 0)
@@ -263,7 +283,7 @@ public class PlayerLogic : MonoBehaviour
 
     private void UpdateArmor()
     {
-        armorSlider.value = _armor;
+        armorSlider.value = _armor * 33;
     }
 
     private void SetEquippedWeapon(int index)
