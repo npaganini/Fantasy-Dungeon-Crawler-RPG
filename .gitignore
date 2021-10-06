@@ -1,3 +1,6 @@
+# Ignore new builds
+
+# deploy/
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,unity,rider,jetbrains,jetbrains+all,jetbrains+iml,linux,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,unity,rider,jetbrains,jetbrains+all,jetbrains+iml,linux,windows
